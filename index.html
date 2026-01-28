@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>ApexIA – Biblioteca de Prompts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #ffffff;
+        }
+
+        p {
+            text-align: center;
+            color: #aaaaaa;
+            margin-bottom: 50px;
+        }
+
+        .prompt-card {
+            background-color: #111111;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 250px;
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #333333;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 14px;
+            resize: none;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            background-color: #7c3aed;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #9333ea;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777777;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ApexIA</h1>
+        <p>Biblioteca de prompts. Clique no botão para copiar automaticamente.</p>
+
+        <div class="prompt-card">
+            <h2>Prompt – Canal Dark</h2>
+            <textarea id="prompt1" readonly>
+COLE AQUI O SEU PROMPT
+            </textarea>
+            <br>
+            <button onclick="copiarPrompt('prompt1')">Copiar Prompt</button>
+        </div>
+
+        <div class="footer">
+            © 2026 • ApexIA • Conteúdo exclusivo para inscritos
+        </div>
+    </div>
+
+    <script>
+        function copiarPrompt(id) {
+            var campo = document.getElementById(id);
+            campo.select();
+            campo.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            alert("Prompt copiado com sucesso!");
+        }
+    </script>
+</body>
+</html>
