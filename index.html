@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <title>ApexIA – Professional Prompt Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Fontes Premium -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0a0a0a;
-            --primary: #8b5cf6; /* Violeta Moderno */
+            --primary: #8b5cf6;
             --primary-hover: #7c3aed;
             --card-bg: #141414;
             --border: rgba(255, 255, 255, 0.08);
@@ -28,7 +27,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Sutil */
         .glow {
             position: fixed;
             top: 0; left: 50%; transform: translateX(-50%);
@@ -38,7 +36,6 @@
             pointer-events: none;
         }
 
-        /* Navbar Minimalista */
         nav {
             display: flex;
             justify-content: space-between;
@@ -64,7 +61,6 @@
             letter-spacing: 1px;
         }
 
-        /* Menu Dropdown */
         .dropdown-container { position: relative; }
         .dropdown-trigger {
             background: rgba(255,255,255,0.05);
@@ -85,10 +81,10 @@
         .dropdown-menu a {
             display: block; padding: 10px; color: var(--text-s);
             text-decoration: none; font-size: 0.85rem; border-radius: 6px;
+            cursor: pointer;
         }
         .dropdown-menu a:hover { background: var(--primary); color: #fff; }
 
-        /* Container Principal */
         .main {
             max-width: 900px;
             margin: 60px auto;
@@ -100,12 +96,11 @@
             font-family: 'Outfit', sans-serif;
             font-size: 3.5rem; font-weight: 900;
             letter-spacing: -2px; margin-bottom: 10px;
-            line-height: 1;
+            line-height: 1.2;
         }
 
         .subtitle { color: var(--text-s); margin-bottom: 50px; font-size: 1.1rem; }
 
-        /* Card de Prompt */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -138,7 +133,6 @@
         }
         .btn-primary:hover { background: var(--primary); color: #fff; }
 
-        /* Modal Seguro */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
@@ -167,18 +161,16 @@
         }
         .btn-green:hover { background: #16a34a; transform: scale(1.02); }
 
-        /* Toast */
         #toast {
             visibility: hidden; background: #fff; color: #000;
             padding: 12px 24px; border-radius: 8px; position: fixed;
             bottom: 30px; left: 50%; transform: translateX(-50%);
-            font-weight: 600; font-size: 0.9rem;
+            font-weight: 600; font-size: 0.9rem; z-index: 3000;
         }
         #toast.show { visibility: visible; }
 
         @media (max-width: 600px) {
             h1 { font-size: 2.2rem; }
-            .subtitle { font-size: 0.9rem; }
             .card { padding: 24px; }
         }
     </style>
@@ -214,14 +206,13 @@
         </div>
     </div>
 
-    <!-- Modal VIP Seguro -->
     <div class="modal" id="modal-lock">
         <div class="modal-box">
             <div style="font-size: 2.5rem; margin-bottom: 10px;">🛡️</div>
             <h2>Acesso Privado</h2>
             <p>Faça parte da nossa comunidade VIP para liberar o acesso e receber novidades exclusivas.</p>
             
-            <form id="lead-form" action="https://formspree.io/f/https://formspree.io/f/xlgnrnqn" method="POST">
+            <form id="lead-form" action="https://formspree.io/f/xlgnrnqn" method="POST">
                 <input type="text" name="Nome" class="input-field" placeholder="Nome completo" required>
                 
                 <div style="display: flex; gap: 8px; margin-bottom: 12px;">
@@ -255,21 +246,48 @@
         let pIdx = 0;
         setInterval(() => {
             pIdx = (pIdx + 1) % phrases.length;
-            document.getElementById('rotate-text').innerText = phrases[pIdx];
+            const rotator = document.getElementById('rotate-text');
+            if(rotator) rotator.innerText = phrases[pIdx];
         }, 4000);
 
         const library = {
-            1: { title: "Modelar Roteiros Virais", content: "Você é um roteirista especializado em vídeos dark..." },
+            1: { 
+                title: "Modelar Roteiros Virais", 
+                content: `Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
+
+Vou colar abaixo LINKS de vídeos de um canal específico.  
+Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
+
+REGRAS FUNDAMENTAIS:
+- Não copiar frases literais
+- Não plagiar histórias
+- Replicar o ESTILO, não o conteúdo
+- O roteiro deve parecer escrito pela mesma pessoa do canal analisado
+
+---
+ANÁLISE OBRIGATÓRIA DOS VÍDEOS
+Antes de escrever o roteiro, analise cuidadosamente:
+1. Estrutura do vídeo
+2. Tipo de hook
+3. Tom da narração
+4. Ritmo da história
+5. Forma de criar suspense
+...` 
+            },
             2: { title: "Estrategista SEO", content: "Em Breve..." },
             3: { title: "Persona Criativa", content: "Em Breve..." },
             4: { title: "Copy Pro", content: "Em Breve..." },
-            5: { title: "Script YouTube", content: "Em Breve.." },
-            6: { title: "Análise de Nicho", content: "Em Breve.." }
+            5: { title: "Script YouTube", content: "Em Breve..." },
+            6: { title: "Análise de Nicho", content: "Em Breve..." }
         };
 
         function loadPrompt(id) {
-            document.getElementById('title').innerText = library[id].title;
-            document.getElementById('prompt-content').value = library[id].content;
+            const titleEl = document.getElementById('title');
+            const contentEl = document.getElementById('prompt-content');
+            if(library[id]) {
+                titleEl.innerText = library[id].title;
+                contentEl.value = library[id].content;
+            }
         }
 
         function handleCopy() {
@@ -282,23 +300,38 @@
 
         document.getElementById('lead-form').onsubmit = async (e) => {
             e.preventDefault();
-            await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
-            localStorage.setItem('apexia_vip_final', 'true');
-            document.getElementById('modal-lock').style.display = 'none';
-            copy();
+            const form = e.target;
+            const button = form.querySelector('button');
+            button.innerText = "Enviando...";
+            
+            try {
+                await fetch(form.action, { 
+                    method: 'POST', 
+                    body: new FormData(form), 
+                    headers: { 'Accept': 'application/json' } 
+                });
+                localStorage.setItem('apexia_vip_final', 'true');
+                document.getElementById('modal-lock').style.display = 'none';
+                copy();
+            } catch (err) {
+                alert("Erro ao enviar. Tente novamente.");
+                button.innerText = "ENTRAR PARA A COMUNIDADE";
+            }
         };
 
         function copy() {
             const area = document.getElementById('prompt-content');
             area.select();
+            document.execCommand('copy'); // Backup para navegadores antigos
             navigator.clipboard.writeText(area.value);
+            
             const t = document.getElementById('toast');
             t.className = "show";
             setTimeout(() => t.className = "", 3000);
         }
 
+        // Inicializa o primeiro prompt ao carregar
         loadPrompt(1);
     </script>
 </body>
 </html>
-
