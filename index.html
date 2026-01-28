@@ -20,15 +20,14 @@
             font-family: 'Inter', sans-serif;
             color: var(--text);
             min-height: 100vh;
-            /* COLOQUE O LINK DA SUA IMAGEM DO GOOGLE DRIVE ABAIXO */
+            /* COLOQUE O LINK DA SUA IMAGEM ABAIXO */
             background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                        url('https://drive.google.com/file/d/1hHQQrZs8BRK5pY90Ny_xL4c4dyfuy-yR/view?usp=sharing'); 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /* Navbar */
         nav {
             background: var(--glass);
             backdrop-filter: blur(15px);
@@ -59,7 +58,6 @@
         }
         .nav-links a:hover { background: rgba(255,255,255,0.05); color: var(--primary); }
 
-        /* Submenus */
         .dropdown {
             position: absolute;
             top: 100%;
@@ -82,14 +80,12 @@
         }
         .dropdown a:hover { background: var(--primary); color: white; }
 
-        /* Container */
         .main-content {
             max-width: 850px;
             margin: 40px auto;
             padding: 0 20px;
         }
 
-        /* Navegação de Passos */
         .prompt-nav {
             display: flex;
             justify-content: space-between;
@@ -123,7 +119,6 @@
         }
         .arrow-btn:hover { background: var(--primary); border-color: var(--primary); transform: scale(1.1); }
 
-        /* Card Central */
         .prompt-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
@@ -161,7 +156,6 @@
             outline: none;
             margin-bottom: 25px;
         }
-        textarea:focus { border-color: var(--primary); }
 
         .btn-copy {
             width: 100%;
@@ -179,7 +173,6 @@
         }
         .btn-copy:hover { background: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(124, 58, 237, 0.4); }
 
-        /* Contato */
         .contact-section {
             margin-top: 60px;
             background: var(--glass);
@@ -213,7 +206,6 @@
         }
         .btn-send:hover { background: var(--primary); color: white; }
 
-        /* Toast */
         #toast {
             visibility: hidden;
             background: #10b981;
@@ -228,7 +220,6 @@
             z-index: 2000;
         }
         #toast.show { visibility: visible; animation: fadeInUp 0.5s; }
-
         @keyframes fadeInUp { from {opacity: 0; bottom: 0;} to {opacity: 1; bottom: 30px;} }
     </style>
 </head>
@@ -240,12 +231,12 @@
             <li>
                 <a>PROMPTS ▾</a>
                 <div class="dropdown">
-                    <a onclick="loadPrompt(1)">Prompt 1</a>
-                    <a onclick="loadPrompt(2)">Prompt 2</a>
-                    <a onclick="loadPrompt(3)">Prompt 3</a>
-                    <a onclick="loadPrompt(4)">Prompt 4</a>
-                    <a onclick="loadPrompt(5)">Prompt 5</a>
-                    <a onclick="loadPrompt(6)">Prompt 6</a>
+                    <a onclick="loadPrompt(1)">EM BREVE</a>
+                    <a onclick="loadPrompt(2)">EM BREVE</a>
+                    <a onclick="loadPrompt(3)">EM BREVE</a>
+                    <a onclick="loadPrompt(4)">EM BREVE</a>
+                    <a onclick="loadPrompt(5)">PEM BREVE</a>
+                    <a onclick="loadPrompt(6)">EM BREVE</a>
                 </div>
             </li>
         </ul>
@@ -273,17 +264,19 @@
             <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT</button>
         </div>
 
+        <!-- FORMULÁRIO CORRIGIDO ABAIXO -->
         <div class="contact-section">
             <h3>Fale com a Equipe</h3>
-            <form action="https://formspree.io/f/contatoapexia@gmail.com" method="POST">
+            <!-- SUBSTITUA O LINK ABAIXO PELO LINK QUE VOCÊ GANHAR NO FORMSPREE -->
+            <form action="https://formspree.io/f/xlgnrnqn" method="POST">
                 <div class="form-group">
-                    <input type="text" name="nome" placeholder="Seu Nome Completo" required>
+                    <input type="text" name="Nome" placeholder="Seu Nome Completo" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="Seu melhor E-mail" required>
+                    <input type="email" name="Email" placeholder="Seu melhor E-mail" required>
                 </div>
                 <div class="form-group">
-                    <textarea name="mensagem" placeholder="Como podemos ajudar?" style="height: 100px;"></textarea>
+                    <textarea name="Mensagem" placeholder="Como podemos ajudar?" style="height: 100px;"></textarea>
                 </div>
                 <button type="submit" class="btn-send">ENVIAR AGORA</button>
             </form>
@@ -293,32 +286,13 @@
     <div id="toast">Copiado com sucesso!</div>
 
     <script>
-        // EDITAR PROMPTS AQUI
         const promptLibrary = {
-            1: {
-                title: "Modelar Roteiro Viral",
-                text: "Você é um roteirista profissional especializado em canais dark... [CONTEÚDO DO PROMPT 1]"
-            },
-            2: {
-                title: "Analista de SEO para YouTube",
-                text: "Atue como um especialista em SEO... [CONTEÚDO DO PROMPT 2]"
-            },
-            3: {
-                title: "Criação de Personagem",
-                text: "Desenvolva uma persona detalhada para... [CONTEÚDO DO PROMPT 3]"
-            },
-            4: {
-                title: "Prompt Genérico 4",
-                text: "Edite este texto no código conforme sua necessidade... [PROMPT 4]"
-            },
-            5: {
-                title: "Prompt Genérico 5",
-                text: "Edite este texto no código conforme sua necessidade... [PROMPT 5]"
-            },
-            6: {
-                title: "Prompt Genérico 6",
-                text: "Edite este texto no código conforme sua necessidade... [PROMPT 6]"
-            }
+            1: { title: "Modelar Roteiro Viral", text: "Você é um roteirista profissional..." },
+            2: { title: "Analista de SEO", text: "Especialista em SEO..." },
+            3: { title: "Criação de Personagem", text: "Desenvolva uma persona..." },
+            4: { title: "Prompt 4", text: "Conteúdo 4..." },
+            5: { title: "Prompt 5", text: "Conteúdo 5..." },
+            6: { title: "Prompt 6", text: "Conteúdo 6..." }
         };
 
         let currentId = 1;
@@ -345,7 +319,6 @@
             const area = document.getElementById('prompt-area');
             area.select();
             navigator.clipboard.writeText(area.value);
-            
             const toast = document.getElementById('toast');
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
@@ -359,9 +332,7 @@
             isBig = !isBig;
         }
 
-        // Iniciar
         loadPrompt(1);
     </script>
 </body>
 </html>
-
