@@ -4,32 +4,46 @@ Html
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>ApexIA – Workflow de Prompts</title>
+    <title>ApexIA – Terminal de Prompts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #7c3aed;
-            --primary-hover: #9333ea;
-            --bg-site: #ffffff;
-            --text-main: #1a1a1a;
-            --text-dim: #64748b;
-            --border: #e2e8f0;
-            --card-bg: #f8fafc;
+            --primary: #7c3aed; /* Roxo Neon */
+            --primary-glow: rgba(124, 58, 237, 0.6);
+            --bg-dark: #050505;
+            --card-bg: rgba(15, 15, 15, 0.9);
+            --border-color: rgba(124, 58, 237, 0.3);
+            --text-main: #e2e8f0;
+            --hacker-green: #00ff41; /* Verde Matrix opcional para detalhes */
         }
 
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
             color: var(--text-main);
-            background-color: var(--bg-site);
             min-height: 100vh;
+            overflow-x: hidden;
+            /* Fundo Estilo Hacker (Grid Digital) */
+            background-image: 
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            from { background-position: 0 0; }
+            to { background-position: 50px 50px; }
         }
 
         /* Navbar */
         nav {
-            background: #ffffff;
-            border-bottom: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--primary);
             padding: 0 5%;
             display: flex;
             justify-content: space-between;
@@ -40,40 +54,46 @@ Html
             z-index: 1000;
         }
 
-        .logo { font-weight: 800; font-size: 1.6rem; color: var(--primary); text-decoration: none; }
-
-        .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
-        .nav-links li { position: relative; }
-        .nav-links a { 
-            color: var(--text-main); 
+        .logo { 
+            font-weight: 900; 
+            font-size: 1.8rem; 
+            color: var(--primary); 
             text-decoration: none; 
-            font-weight: 600; 
-            font-size: 0.95rem; 
-            cursor: pointer;
-            padding: 10px 20px;
-            border-radius: 8px;
+            text-shadow: 0 0 10px var(--primary-glow);
         }
 
+        .nav-links { display: flex; list-style: none; gap: 20px; }
+        .nav-links a { 
+            color: white; 
+            text-decoration: none; 
+            font-weight: 600; 
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            padding: 10px;
+            border: 1px solid transparent;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { border: 1px solid var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+
+        /* Dropdown */
         .dropdown {
             position: absolute;
             top: 100%;
             right: 0;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            min-width: 180px;
+            background: #000;
+            border: 1px solid var(--primary);
             display: none;
-            padding: 10px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-width: 150px;
         }
         .nav-links li:hover .dropdown { display: block; }
-        .dropdown a { padding: 12px 20px; display: block; font-size: 0.85rem; color: var(--text-main); }
-        .dropdown a:hover { background: var(--primary); color: white; }
+        .dropdown a { display: block; padding: 10px; border: none; }
+        .dropdown a:hover { background: var(--primary); }
 
         /* Main Content */
         .main-content {
-            max-width: 800px;
-            margin: 40px auto;
+            max-width: 850px;
+            margin: 50px auto;
             padding: 0 20px;
         }
 
@@ -81,107 +101,119 @@ Html
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .step-label {
-            background: var(--primary);
-            color: white;
-            padding: 6px 18px;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 0.75rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--hacker-green);
+            font-weight: bold;
+            font-size: 1rem;
         }
 
         .arrow-btn {
-            background: white;
-            border: 1px solid var(--border);
-            width: 45px; height: 45px;
-            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: white;
+            width: 50px; height: 50px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1.2rem;
             transition: 0.3s;
         }
-        .arrow-btn:hover { background: var(--primary); color: white; }
+        .arrow-btn:hover { background: var(--primary); box-shadow: 0 0 15px var(--primary); }
 
-        /* Card */
+        /* Card Estilo Hacker */
         .prompt-card {
             background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
+            border: 1px solid var(--primary);
+            border-radius: 5px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(124, 58, 237, 0.1);
+            position: relative;
         }
 
+        /* Avatar Clicável */
         #profile-img {
-            width: 90px; height: 90px;
+            width: 100px; height: 100px;
             border-radius: 50%;
-            border: 3px solid var(--primary);
+            border: 2px solid var(--primary);
             margin-bottom: 20px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.5s;
+            filter: drop-shadow(0 0 10px var(--primary));
         }
 
-        h2 { margin-bottom: 25px; font-size: 1.8rem; }
+        h2 { 
+            font-family: 'Fira Code', monospace; 
+            font-size: 1.5rem; 
+            margin-bottom: 30px;
+            color: #fff;
+        }
 
         textarea {
             width: 100%;
-            height: 300px;
-            background: #ffffff;
-            color: #334155;
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            height: 350px;
+            background: #000;
+            color: var(--hacker-green);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
             padding: 20px;
-            font-size: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
             resize: none;
             outline: none;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 10px rgba(0,255,65,0.05);
         }
 
         .btn-copy {
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             background: var(--primary);
             border: none;
-            border-radius: 14px;
             color: white;
-            font-weight: 700;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
             cursor: pointer;
-            font-size: 1rem;
+            transition: 0.3s;
+        }
+        .btn-copy:hover { 
+            background: var(--primary-hover); 
+            box-shadow: 0 0 25px var(--primary);
+            transform: scale(1.02);
         }
 
-        /* MODAL DE CADASTRO */
+        /* MODAL TRAVA */
         #modal-trava {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.9);
             z-index: 2000;
             justify-content: center;
             align-items: center;
         }
 
         .modal-content {
-            background: white;
+            background: #0a0a0a;
             padding: 40px;
-            border-radius: 20px;
+            border: 2px solid var(--primary);
             width: 90%;
             max-width: 400px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 0 50px var(--primary-glow);
         }
 
-        .modal-content h3 { margin-top: 0; color: var(--primary); }
-        .modal-content p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 25px; }
-
+        .modal-content h3 { color: var(--primary); font-family: 'Fira Code', monospace; }
         .modal-content input {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #111;
+            border: 1px solid var(--primary);
+            color: white;
             box-sizing: border-box;
         }
 
@@ -191,42 +223,41 @@ Html
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-weight: 700;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        /* Toast */
+        /* Notificação */
         #toast {
             visibility: hidden;
-            background: #10b981;
+            background: var(--primary);
             color: white;
-            padding: 16px 30px;
-            border-radius: 12px;
+            padding: 15px 30px;
             position: fixed;
             bottom: 30px; left: 50%;
             transform: translateX(-50%);
-            z-index: 3000;
+            font-weight: bold;
+            border: 1px solid white;
         }
-        #toast.show { visibility: visible; animation: fadeInUp 0.5s; }
-        @keyframes fadeInUp { from {opacity: 0; bottom: 0;} to {opacity: 1; bottom: 30px;} }
+        #toast.show { visibility: visible; animation: blink 0.5s infinite alternate; }
+        @keyframes blink { from { opacity: 1; } to { opacity: 0.8; } }
 
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo">ApexIA</a>
+        <a href="#" class="logo">APEXIA_SYSTEM</a>
         <ul class="nav-links">
             <li>
-                <a>PROMPTS ▾</a>
+                <a>[ PROMPTS ] ▾</a>
                 <div class="dropdown">
-                    <a onclick="loadPrompt(1)">Prompt 1</a>
-                    <a onclick="loadPrompt(2)">Prompt 2</a>
-                    <a onclick="loadPrompt(3)">Prompt 3</a>
-                    <a onclick="loadPrompt(4)">Prompt 4</a>
-                    <a onclick="loadPrompt(5)">Prompt 5</a>
-                    <a onclick="loadPrompt(6)">Prompt 6</a>
+                    <a onclick="loadPrompt(1)">01_Roteiro</a>
+                    <a onclick="loadPrompt(2)">02_SEO</a>
+                    <a onclick="loadPrompt(3)">03_Avatar</a>
+                    <a onclick="loadPrompt(4)">04_Copy</a>
+                    <a onclick="loadPrompt(5)">05_Shorts</a>
+                    <a onclick="loadPrompt(6)">06_Extra</a>
                 </div>
             </li>
         </ul>
@@ -234,7 +265,7 @@ Html
 
     <div class="main-content">
         <div class="prompt-nav">
-            <div class="step-label" id="step-text">PASSO 1</div>
+            <div class="step-label" id="step-text">> STEP_01</div>
             <div>
                 <button class="arrow-btn" onclick="prevPrompt()">❮</button>
                 <button class="arrow-btn" onclick="nextPrompt()">❯</button>
@@ -242,156 +273,55 @@ Html
         </div>
 
         <div class="prompt-card">
-            <img src="img/avatar.png" id="profile-img" alt="Avatar" onclick="toggleAvatarSize()">
-            <h2 id="prompt-title">Título do Prompt</h2>
+            <img src="img/avatar.png" id="profile-img" alt="Root" onclick="toggleAvatarSize()">
+            <h2 id="prompt-title">ANALISANDO_SISTEMA...</h2>
             <textarea id="prompt-area" readonly></textarea>
-            <button class="btn-copy" onclick="verificarESapiar()">COPIAR PROMPT</button>
+            <button class="btn-copy" onclick="verificarInscricao()">EXECUTAR COPIA</button>
         </div>
     </div>
 
-    <!-- MODAL QUE PEDE NOME E WHATSAPP -->
+    <!-- MODAL DE CADASTRO -->
     <div id="modal-trava">
         <div class="modal-content">
-            <h3>Liberação Exclusiva</h3>
-            <p>Inscreva-se para liberar o acesso vitalício à biblioteca de prompts.</p>
+            <h3>ACESSO_RESTRITO</h3>
+            <p style="font-size: 0.8rem; color: #888; margin-bottom: 20px;">Insira suas credenciais para liberar o terminal.</p>
             
-            <!-- Link do Formspree aqui -->
-            <form id="form-inscricao" action="https://formspree.io/f/https://formspree.io/f/xlgnrnqn" method="POST">
-                <input type="text" name="Nome" placeholder="Seu Nome Completo" required>
-                <input type="text" name="WhatsApp" placeholder="Seu WhatsApp (Ex: 11999999999)" required>
-                <button type="submit" class="btn-liberar">LIBERAR AGORA</button>
+            <form id="form-hacker" action="https://formspree.io/f/https://formspree.io/f/xlgnrnqn" method="POST">
+                <input type="text" name="Nome" placeholder="NOME_USUARIO" required>
+                <input type="text" name="WhatsApp" placeholder="WHATSAPP_ID" required>
+                <button type="submit" class="btn-liberar">LIBERAR_ACESSO</button>
             </form>
         </div>
     </div>
 
-    <div id="toast">Copiado com sucesso!</div>
+    <div id="toast">DATA_COPIED_SUCCESSFULLY</div>
 
     <script>
         const promptLibrary = {
-            1: { title: "Modelar Roteiro Viral", text: "Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
-
-Vou colar abaixo LINKS de vídeos de um canal específico.  
-Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
-
-REGRAS FUNDAMENTAIS:
-- Não copiar frases literais
-- Não plagiar histórias
-- Replicar o ESTILO, não o conteúdo
-- O roteiro deve parecer escrito pela mesma pessoa do canal analisado
-
----
-
-ANÁLISE OBRIGATÓRIA DOS VÍDEOS
-
-Antes de escrever o roteiro, analise cuidadosamente:
-
-1. Estrutura do vídeo (abertura, desenvolvimento e final)
-2. Tipo de hook usado nos primeiros 5 a 15 segundos
-3. Tom da narração (sombrio, misterioso, emocional, tenso, reflexivo, chocante, etc.)
-4. Ritmo da história (lento, crescente, com pausas estratégicas)
-5. Forma de criar curiosidade e suspense
-6. Linguagem utilizada (simples, direta, emocional, dramática)
-7. Tipo de frases (curtas, impactantes, uso de perguntas retóricas)
-8. Clima geral do vídeo (medo, mistério, tragédia, reflexão, choque)
-9. Forma como o narrador se comunica com o espectador
-10. Estratégias usadas para manter retenção até o final
-
-Dê prioridade máxima aos vídeos com maior número de visualizações.
-
----
-
-OBJETIVO DO ROTEIRO
-
-Criar um roteiro original que mantenha:
-
-- O mesmo hook
-- O mesmo clima emocional
-- O mesmo tom narrativo
-- O mesmo ritmo
-- A mesma forma de escrita
-- A mesma sensação de vídeo viral
-
-O espectador deve sentir que está assistindo a um vídeo do mesmo canal.
-
----
-
-FORMATO DA ENTREGA
-
-1. TÍTULO DO VÍDEO  
-- Mesmo estilo dos títulos do canal  
-- Curto, intrigante e emocional  
-- Criando curiosidade imediata  
-
-2. HOOK INICIAL (5 a 15 segundos)  
-- Forte e impactante  
-- Misterioso  
-- Criando curiosidade extrema  
-- Sem revelar o desfecho  
-
-3. ROTEIRO COMPLETO  
-- Escrita fluida e envolvente  
-- Narrativa contínua  
-- Frases cinematográficas e emocionais  
-- Crescimento progressivo de tensão  
-- Uso estratégico de pausas  
-- Final forte, coerente com o estilo do canal  
-
-4. ESTILO DE ESCRITA  
-- Mesmo vocabulário  
-- Mesmo tom  
-- Mesmo nível de dramaticidade  
-- Linguagem natural, humana e envolvente  
-
----
-
-O QUE EVITAR
-
-- Linguagem genérica  
-- Tom neutro ou robótico  
-- Estrutura padrão de roteiro comum  
-- Qualquer sinal de escrita artificial  
-
----
-
-IMPORTANTE
-
-Utilize principalmente os vídeos mais assistidos como base de estilo.
-
-O roteiro deve demonstrar domínio completo do padrão narrativo do canal analisado.
-
----
-
-LINKS DOS VÍDEOS DE REFERÊNCIA:
-(Cole todos os links aqui)
-" },
-            2: { title: "Estrategista de Reels", text: "Conteúdo do Prompt 2..." },
-            3: { title: "Prompt 3", text: "Conteúdo do Prompt 3..." },
-            4: { title: "Prompt 4", text: "Conteúdo do Prompt 4..." },
-            5: { title: "Prompt 5", text: "Conteúdo do Prompt 5..." },
-            6: { title: "Prompt 6", text: "Conteúdo do Prompt 6..." }
+            1: { title: "MODELAR_ROTEIRO_VIRAL", text: "Você é um roteirista profissional especializado em canais dark..." },
+            2: { title: "ANALISTA_SEO_AVANÇADO", text: "Atue como especialista em algoritmos do YouTube..." },
+            3: { title: "GERADOR_PERSONAGEM_IA", text: "Crie uma descrição detalhada de personagem para Midjourney..." },
+            4: { title: "COPYWRITING_HACKER", text: "Escreva uma carta de vendas usando gatilhos mentais..." },
+            5: { title: "ESTRATEGIA_RETENÇÃO_SHORTS", text: "Analise os primeiros 3 segundos deste roteiro e otimize o hook..." },
+            6: { title: "EXTRA_PROMPT_SYSTEM", text: "Comando genérico configurável pelo administrador..." }
         };
 
         let currentId = 1;
 
-        // Verifica se o usuário já se inscreveu antes
-        function verificarESapiar() {
-            const inscrito = localStorage.getItem('apexia_inscrito');
-            
-            if (inscrito === 'true') {
-                executarCopia();
+        function verificarInscricao() {
+            if (localStorage.getItem('apexia_auth') === 'granted') {
+                copiarTexto();
             } else {
                 document.getElementById('modal-trava').style.display = 'flex';
             }
         }
 
-        // Envia o formulário e libera o navegador
-        const form = document.getElementById('form-inscricao');
+        const form = document.getElementById('form-hacker');
         form.onsubmit = async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
-            btn.innerText = "Processando...";
+            btn.innerText = "AUTHENTICATING...";
 
-            // Envia para o Formspree
             const formData = new FormData(form);
             await fetch(form.action, {
                 method: 'POST',
@@ -399,15 +329,12 @@ LINKS DOS VÍDEOS DE REFERÊNCIA:
                 headers: { 'Accept': 'application/json' }
             });
 
-            // Salva no navegador que ele já se inscreveu
-            localStorage.setItem('apexia_inscrito', 'true');
-            
-            // Fecha o modal e copia
+            localStorage.setItem('apexia_auth', 'granted');
             document.getElementById('modal-trava').style.display = 'none';
-            executarCopia();
+            copiarTexto();
         };
 
-        function executarCopia() {
+        function copiarTexto() {
             const area = document.getElementById('prompt-area');
             area.select();
             navigator.clipboard.writeText(area.value);
@@ -421,7 +348,7 @@ LINKS DOS VÍDEOS DE REFERÊNCIA:
             currentId = id;
             document.getElementById('prompt-title').innerText = promptLibrary[id].title;
             document.getElementById('prompt-area').value = promptLibrary[id].text;
-            document.getElementById('step-text').innerText = "PASSO " + id;
+            document.getElementById('step-text').innerText = "> STEP_0" + id;
         }
 
         function nextPrompt() { currentId = currentId >= 6 ? 1 : currentId + 1; loadPrompt(currentId); }
@@ -430,8 +357,8 @@ LINKS DOS VÍDEOS DE REFERÊNCIA:
         let isBig = false;
         function toggleAvatarSize() {
             const img = document.getElementById('profile-img');
-            img.style.width = isBig ? "90px" : "160px";
-            img.style.height = isBig ? "90px" : "160px";
+            img.style.width = isBig ? "100px" : "180px";
+            img.style.height = isBig ? "100px" : "180px";
             isBig = !isBig;
         }
 
@@ -439,4 +366,3 @@ LINKS DOS VÍDEOS DE REFERÊNCIA:
     </script>
 </body>
 </html>
-
