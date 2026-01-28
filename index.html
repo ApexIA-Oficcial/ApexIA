@@ -2,279 +2,367 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>ApexIA – AI Inspirational Workflow</title>
+    <title>ApexIA – Workflow de Prompts</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Importando a fonte Inter para um visual moderno -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #050505;
-            --card-bg: #111111;
-            --primary-color: #7c3aed; /* Roxo principal */
+            --primary: #7c3aed;
             --primary-hover: #9333ea;
-            --text-main: #ffffff;
+            --glass: rgba(15, 15, 15, 0.85);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
             --text-dim: #94a3b8;
-            --border-color: #262626;
         }
 
         body {
             margin: 0;
-            padding: 0;
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
+            color: var(--text);
+            min-height: 100vh;
+            /* SUBSTITUA O LINK ABAIXO PELO LINK DIRETO DA SUA IMAGEM */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
         }
 
-        /* Header / Navbar Estilo Zapiwala */
+        /* Navbar e Menus */
         nav {
-            padding: 20px 5%;
-            border-bottom: 1px solid var(--border-color);
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
+            height: 70px;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
-        .logo {
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -1px;
-            color: var(--text-main);
-            text-decoration: none;
+        .logo { font-weight: 800; font-size: 1.6rem; color: var(--primary); text-decoration: none; }
+
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links li { position: relative; }
+        .nav-links a { color: white; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: 0.3s; cursor: pointer;}
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Dropdown Estilizado */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-width: 160px;
+            display: none;
+            padding: 10px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
 
-        .container {
-            max-width: 800px;
-            margin: 60px auto;
+        .nav-links li:hover .dropdown { display: block; }
+        .dropdown a {
+            padding: 10px 20px;
+            display: block;
+            font-size: 0.85rem;
+        }
+
+        /* Container Principal */
+        .main-content {
+            max-width: 900px;
+            margin: 50px auto;
             padding: 0 20px;
         }
 
-        /* Breadcrumbs & Badge */
-        .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            background: rgba(124, 58, 237, 0.1);
-            color: var(--primary-color);
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            border: 1px solid rgba(124, 58, 237, 0.2);
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -0.02em;
-        }
-
-        /* Autor Info */
-        .author-box {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 40px;
-        }
-
-        .author-box img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--border-color);
-        }
-
-        .author-info span {
-            display: block;
-            font-size: 0.9rem;
-            color: var(--text-dim);
-        }
-
-        /* Prompt Card */
-        .prompt-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            position: relative;
-        }
-
-        .card-header {
+        /* Header do Prompt com Setas */
+        .prompt-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
 
-        .card-header h2 {
-            font-size: 1.2rem;
-            margin: 0;
-            color: var(--text-main);
+        .step-label {
+            background: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
         }
+
+        .arrow-box { display: flex; gap: 15px; }
+        .arrow-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .arrow-btn:hover { background: var(--primary); border-color: var(--primary); transform: scale(1.1); }
+
+        /* Card de Prompt */
+        .prompt-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        /* Avatar Ajustável */
+        .avatar-container { margin-bottom: 25px; }
+        #profile-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            transition: 0.4s ease;
+            cursor: pointer;
+            object-fit: cover;
+        }
+        #profile-img:active { transform: scale(0.8); }
+
+        h2 { margin: 10px 0 30px 0; font-size: 2rem; letter-spacing: -1px; }
 
         textarea {
             width: 100%;
-            height: 350px;
-            background-color: #000000;
-            color: #d1d5db;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            height: 300px;
+            background: rgba(0,0,0,0.4);
+            color: #e2e8f0;
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 20px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.95rem;
+            font-size: 1rem;
             resize: none;
-            box-sizing: border-box;
             outline: none;
+            margin-bottom: 20px;
             transition: border-color 0.3s;
         }
+        textarea:focus { border-color: var(--primary); }
 
-        textarea:focus {
-            border-color: var(--primary-color);
-        }
-
-        /* Botão de Cópia Customizado */
         .btn-copy {
             width: 100%;
-            margin-top: 20px;
-            padding: 15px;
+            padding: 18px;
+            background: var(--primary);
             border: none;
-            border-radius: 12px;
-            background-color: var(--primary-color);
+            border-radius: 14px;
             color: white;
+            font-weight: 700;
             font-size: 1rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            transition: 0.3s;
+        }
+        .btn-copy:hover { background: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(124, 58, 237, 0.4); }
+
+        /* Formulário de Contato */
+        .contact-section {
+            margin-top: 100px;
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
         }
 
-        .btn-copy:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        .contact-section h3 { margin-top: 0; font-size: 1.5rem; text-align: center; margin-bottom: 30px; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+        }
+        .btn-send {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
         }
 
-        .btn-copy:active {
-            transform: translateY(0);
-        }
-
-        .footer {
-            text-align: center;
-            color: var(--text-dim);
-            margin: 80px 0 40px;
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 40px;
-        }
-
-        /* Toast de notificação */
         #toast {
             visibility: hidden;
-            min-width: 200px;
-            background-color: #10b981;
-            color: #fff;
-            text-align: center;
-            border-radius: 8px;
+            background: #10b981;
+            color: white;
             padding: 16px;
+            border-radius: 8px;
             position: fixed;
-            z-index: 101;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            font-weight: 600;
+            z-index: 2000;
         }
+        #toast.show { visibility: visible; animation: fade 0.5s; }
 
-        #toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        @keyframes fade { from {opacity: 0;} to {opacity: 1;} }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            h2 { font-size: 1.5rem; }
         }
-
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
     </style>
 </head>
 <body>
 
     <nav>
         <a href="#" class="logo">ApexIA</a>
-        <div style="color: var(--text-dim); font-size: 0.9rem;">Premium Prompts</div>
+        <ul class="nav-links">
+            <li>
+                <a>Prompts ▾</a>
+                <div class="dropdown">
+                    <a onclick="loadPrompt(1)">Prompt 1</a>
+                    <a onclick="loadPrompt(2)">Prompt 2</a>
+                    <a onclick="loadPrompt(3)">Prompt 3</a>
+                    <a onclick="loadPrompt(4)">Prompt 4</a>
+                    <a onclick="loadPrompt(5)">Prompt 5</a>
+                    <a onclick="loadPrompt(6)">Prompt 6</a>
+                </div>
+            </li>
+            <li><a>Novidades</a></li>
+            <li><a>Sobre</a></li>
+        </ul>
     </nav>
 
-    <div class="container">
-        <div class="badge">O TALENTO VENCE O TRABALHO QUANDO O TALENTOSO NÃO TRABALHA</div>
-        <h1>Prompts ApexIA</h1>
+    <div class="main-content">
         
-        <div class="author-box">
-            <img src="img/avatar.png" alt="Avatar ApexIA">
-            <div class="author-info">
-                <strong>Equipe ApexIA</strong>
-                <span>Atualizado em Janeiro de 2026</span>
+        <div class="prompt-nav">
+            <div class="step-label" id="step-text">PASSO 1</div>
+            <div class="arrow-box">
+                <button class="arrow-btn" onclick="prevPrompt()">❮</button>
+                <button class="arrow-btn" onclick="nextPrompt()">❯</button>
             </div>
         </div>
 
         <div class="prompt-card">
-            <div class="card-header">
-                <h2>Modelar Roteiro Viral</h2>
-                <span style="font-size: 0.8rem; color: var(--text-dim);">Texto Otimizado para GPT-4/Claude</span>
+            <div class="avatar-container">
+                <img src="img/avatar.png" id="profile-img" alt="Avatar" title="Clique para mudar o tamanho" onclick="toggleAvatarSize()">
             </div>
             
-            <textarea id="prompt1" readonly>Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
-
-Vou colar abaixo LINKS de vídeos de um canal específico.  
-Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
-
-REGRAS FUNDAMENTAIS:
-- Não copiar frases literais
-- Não plagiar histórias
-- Replicar o ESTILO, não o conteúdo
-- O roteiro deve parecer escrito pela mesma pessoa do canal analisado
-
----
-(Resta do seu prompt aqui...)
-            </textarea>
+            <h2 id="prompt-title">Modelar Roteiro Viral</h2>
             
-            <button class="btn-copy" onclick="copiarPrompt('prompt1')">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
-                Copiar Prompt
-            </button>
+            <textarea id="prompt-area" readonly></textarea>
+            
+            <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT</button>
         </div>
 
-        <div class="footer">
-            © 2026 • <strong>ApexIA</strong> • Transformando ideias em autoridade digital.
+        <!-- Sessão de Contato -->
+        <div class="contact-section">
+            <h3>Fale Conosco</h3>
+            <form action="https://formspree.io/f/contatoapexia@gmail.com" method="POST">
+                <div class="form-group">
+                    <input type="text" name="nome" placeholder="Seu Nome" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Seu E-mail" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="assunto" placeholder="Assunto">
+                </div>
+                <div class="form-group">
+                    <textarea name="mensagem" placeholder="Sua Mensagem" style="height: 100px;"></textarea>
+                </div>
+                <button type="submit" class="btn-send">ENVIAR MENSAGEM</button>
+            </form>
         </div>
+
     </div>
 
-    <div id="toast">Copiado com sucesso!</div>
+    <div id="toast">Copiado para a área de transferência!</div>
 
     <script>
-        function copiarPrompt(id) {
-            var campo = document.getElementById(id);
-            campo.select();
-            campo.setSelectionRange(0, 99999);
-            
-            // Usando API moderna de clipboard
-            navigator.clipboard.writeText(campo.value).then(() => {
-                showToast();
-            });
+        // Banco de Dados de Prompts (Edite os textos aqui)
+        const promptLibrary = {
+            1: {
+                title: "Modelar Roteiro Viral",
+                text: "Você é um roteirista profissional especializado em canais dark... [PROMPT 1]"
+            },
+            2: {
+                title: "Estrategista de Reels",
+                text: "Atue como um especialista em retenção de vídeos curtos... [PROMPT 2]"
+            },
+            3: {
+                title: "Criador de Thumbnails",
+                text: "Gere 5 ideias de thumbnails de alto CTR para o nicho... [PROMPT 3]"
+            },
+            4: {
+                title: "Copywriting de Vendas",
+                text: "Escreva uma página de vendas usando o método AIDA... [PROMPT 4]"
+            },
+            5: {
+                title: "Analisador de Dados IA",
+                text: "Analise os seguintes dados e extraia insights... [PROMPT 5]"
+            },
+            6: {
+                title: "Gerador de Títulos",
+                text: "Crie 10 títulos magnéticos para o tema seguinte... [PROMPT 6]"
+            }
+        };
+
+        let currentId = 1;
+
+        function loadPrompt(id) {
+            currentId = id;
+            const p = promptLibrary[id];
+            document.getElementById('prompt-title').innerText = p.title;
+            document.getElementById('prompt-area').value = p.text;
+            document.getElementById('step-text').innerText = "PASSO " + id;
         }
 
-        function showToast() {
-            var x = document.getElementById("toast");
-            x.className = "show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        function nextPrompt() {
+            currentId = currentId >= 6 ? 1 : currentId + 1;
+            loadPrompt(currentId);
         }
+
+        function prevPrompt() {
+            currentId = currentId <= 1 ? 6 : currentId - 1;
+            loadPrompt(currentId);
+        }
+
+        // Função de Copiar
+        function copyPrompt() {
+            const area = document.getElementById('prompt-area');
+            area.select();
+            navigator.clipboard.writeText(area.value);
+            
+            const toast = document.getElementById('toast');
+            toast.className = "show";
+            setTimeout(() => { toast.className = ""; }, 3000);
+        }
+
+        // Ajuste do Avatar
+        let isBig = false;
+        function toggleAvatarSize() {
+            const img = document.getElementById('profile-img');
+            if(!isBig) {
+                img.style.width = "150px";
+                img.style.height = "150px";
+            } else {
+                img.style.width = "80px";
+                img.style.height = "80px";
+            }
+            isBig = !isBig;
+        }
+
+        // Inicializar o primeiro prompt
+        loadPrompt(1);
     </script>
 </body>
 </html>
-
