@@ -1,3 +1,5 @@
+code
+Html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,28 +11,24 @@
         :root {
             --primary: #7c3aed;
             --primary-hover: #9333ea;
-            --glass: rgba(10, 10, 10, 0.85);
-            --border: rgba(255, 255, 255, 0.1);
-            --text: #ffffff;
-            --text-dim: #94a3b8;
+            --bg-site: #ffffff;
+            --text-main: #1a1a1a;
+            --text-dim: #64748b;
+            --border: #e2e8f0;
+            --card-bg: #f8fafc;
         }
 
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
-            color: var(--text);
+            color: var(--text-main);
+            background-color: var(--bg-site);
             min-height: 100vh;
-            /* COLOQUE O LINK DA SUA IMAGEM ABAIXO */
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
-                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); 
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
         }
 
+        /* Navbar */
         nav {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
+            background: #ffffff;
             border-bottom: 1px solid var(--border);
             padding: 0 5%;
             display: flex;
@@ -47,41 +45,34 @@
         .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
         .nav-links li { position: relative; }
         .nav-links a { 
-            color: white; 
+            color: var(--text-main); 
             text-decoration: none; 
             font-weight: 600; 
             font-size: 0.95rem; 
             cursor: pointer;
             padding: 10px 20px;
             border-radius: 8px;
-            transition: 0.3s;
         }
-        .nav-links a:hover { background: rgba(255,255,255,0.05); color: var(--primary); }
 
         .dropdown {
             position: absolute;
             top: 100%;
             right: 0;
-            background: #111;
+            background: #ffffff;
             border: 1px solid var(--border);
             border-radius: 12px;
             min-width: 180px;
             display: none;
             padding: 10px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
         .nav-links li:hover .dropdown { display: block; }
-        .dropdown a {
-            padding: 12px 20px;
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 400;
-        }
+        .dropdown a { padding: 12px 20px; display: block; font-size: 0.85rem; color: var(--text-main); }
         .dropdown a:hover { background: var(--primary); color: white; }
 
+        /* Main Content */
         .main-content {
-            max-width: 850px;
+            max-width: 800px;
             margin: 40px auto;
             padding: 0 20px;
         }
@@ -95,63 +86,54 @@
 
         .step-label {
             background: var(--primary);
+            color: white;
             padding: 6px 18px;
             border-radius: 30px;
             font-weight: 800;
             font-size: 0.75rem;
-            letter-spacing: 1px;
         }
 
-        .arrow-box { display: flex; gap: 12px; }
         .arrow-btn {
-            background: var(--glass);
+            background: white;
             border: 1px solid var(--border);
-            color: white;
-            width: 45px;
-            height: 45px;
+            width: 45px; height: 45px;
             border-radius: 50%;
             cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             font-size: 1.2rem;
+            transition: 0.3s;
         }
-        .arrow-btn:hover { background: var(--primary); border-color: var(--primary); transform: scale(1.1); }
+        .arrow-btn:hover { background: var(--primary); color: white; }
 
+        /* Card */
         .prompt-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
+            background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
 
-        .avatar-container { margin-bottom: 20px; }
         #profile-img {
-            width: 90px;
-            height: 90px;
+            width: 90px; height: 90px;
             border-radius: 50%;
             border: 3px solid var(--primary);
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 20px;
             cursor: pointer;
-            object-fit: cover;
+            transition: 0.3s;
         }
 
-        h2 { margin: 0 0 25px 0; font-size: 1.8rem; font-weight: 700; }
+        h2 { margin-bottom: 25px; font-size: 1.8rem; }
 
         textarea {
             width: 100%;
-            height: 320px;
-            background: rgba(0,0,0,0.5);
-            color: #cbd5e1;
+            height: 300px;
+            background: #ffffff;
+            color: #334155;
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
-            font-size: 0.95rem;
-            line-height: 1.6;
+            font-size: 1rem;
             resize: none;
             outline: none;
             margin-bottom: 25px;
@@ -165,47 +147,56 @@
             border-radius: 14px;
             color: white;
             font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
-            transition: 0.3s;
+            font-size: 1rem;
         }
-        .btn-copy:hover { background: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(124, 58, 237, 0.4); }
 
-        .contact-section {
-            margin-top: 60px;
-            background: var(--glass);
+        /* MODAL DE CADASTRO */
+        #modal-trava {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
             padding: 40px;
-            border-radius: 24px;
-            border: 1px solid var(--border);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
-        .contact-section h3 { margin-top: 0; text-align: center; margin-bottom: 25px; }
+        .modal-content h3 { margin-top: 0; color: var(--primary); }
+        .modal-content p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 25px; }
 
-        .form-group { margin-bottom: 15px; }
-        .form-group input, .form-group textarea {
+        .modal-content input {
             width: 100%;
-            padding: 14px;
-            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            margin-bottom: 15px;
             border: 1px solid var(--border);
-            border-radius: 10px;
-            color: white;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            box-sizing: border-box;
         }
-        .btn-send {
-            background: #fff;
-            color: #000;
-            border: none;
+
+        .btn-liberar {
+            width: 100%;
             padding: 15px;
-            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
         }
-        .btn-send:hover { background: var(--primary); color: white; }
 
+        /* Toast */
         #toast {
             visibility: hidden;
             background: #10b981;
@@ -213,14 +204,13 @@
             padding: 16px 30px;
             border-radius: 12px;
             position: fixed;
-            bottom: 30px;
-            left: 50%;
+            bottom: 30px; left: 50%;
             transform: translateX(-50%);
-            font-weight: 600;
-            z-index: 2000;
+            z-index: 3000;
         }
         #toast.show { visibility: visible; animation: fadeInUp 0.5s; }
         @keyframes fadeInUp { from {opacity: 0; bottom: 0;} to {opacity: 1; bottom: 30px;} }
+
     </style>
 </head>
 <body>
@@ -243,42 +233,33 @@
     </nav>
 
     <div class="main-content">
-        
         <div class="prompt-nav">
             <div class="step-label" id="step-text">PASSO 1</div>
-            <div class="arrow-box">
+            <div>
                 <button class="arrow-btn" onclick="prevPrompt()">❮</button>
                 <button class="arrow-btn" onclick="nextPrompt()">❯</button>
             </div>
         </div>
 
         <div class="prompt-card">
-            <div class="avatar-container">
-                <img src="img/avatar.png" id="profile-img" alt="Avatar" onclick="toggleAvatarSize()">
-            </div>
-            
+            <img src="img/avatar.png" id="profile-img" alt="Avatar" onclick="toggleAvatarSize()">
             <h2 id="prompt-title">Título do Prompt</h2>
-            
             <textarea id="prompt-area" readonly></textarea>
-            
-            <button class="btn-copy" onclick="copyPrompt()">COPIAR PROMPT</button>
+            <button class="btn-copy" onclick="verificarESapiar()">COPIAR PROMPT</button>
         </div>
+    </div>
 
-        <!-- FORMULÁRIO CORRIGIDO ABAIXO -->
-        <div class="contact-section">
-            <h3>Fale com a Equipe</h3>
-            <!-- SUBSTITUA O LINK ABAIXO PELO LINK QUE VOCÊ GANHAR NO FORMSPREE -->
-            <form action="https://formspree.io/f/xlgnrnqn" method="POST">
-                <div class="form-group">
-                    <input type="text" name="Nome" placeholder="Seu Nome Completo" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" name="Email" placeholder="Seu melhor E-mail" required>
-                </div>
-                <div class="form-group">
-                    <textarea name="Mensagem" placeholder="Como podemos ajudar?" style="height: 100px;"></textarea>
-                </div>
-                <button type="submit" class="btn-send">ENVIAR AGORA</button>
+    <!-- MODAL QUE PEDE NOME E WHATSAPP -->
+    <div id="modal-trava">
+        <div class="modal-content">
+            <h3>Liberação Exclusiva</h3>
+            <p>Inscreva-se para liberar o acesso vitalício à biblioteca de prompts.</p>
+            
+            <!-- Link do Formspree aqui -->
+            <form id="form-inscricao" action="https://formspree.io/f/COLE_SEU_ID_AQUI" method="POST">
+                <input type="text" name="Nome" placeholder="Seu Nome Completo" required>
+                <input type="text" name="WhatsApp" placeholder="Seu WhatsApp (Ex: 11999999999)" required>
+                <button type="submit" class="btn-liberar">LIBERAR AGORA</button>
             </form>
         </div>
     </div>
@@ -287,124 +268,69 @@
 
     <script>
         const promptLibrary = {
-            1: { title: "Modelar Roteiro Viral", text: "Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
-
-Vou colar abaixo LINKS de vídeos de um canal específico.  
-Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
-
-REGRAS FUNDAMENTAIS:
-- Não copiar frases literais
-- Não plagiar histórias
-- Replicar o ESTILO, não o conteúdo
-- O roteiro deve parecer escrito pela mesma pessoa do canal analisado
-
----
-
-ANÁLISE OBRIGATÓRIA DOS VÍDEOS
-
-Antes de escrever o roteiro, analise cuidadosamente:
-
-1. Estrutura do vídeo (abertura, desenvolvimento e final)
-2. Tipo de hook usado nos primeiros 5 a 15 segundos
-3. Tom da narração (sombrio, misterioso, emocional, tenso, reflexivo, chocante, etc.)
-4. Ritmo da história (lento, crescente, com pausas estratégicas)
-5. Forma de criar curiosidade e suspense
-6. Linguagem utilizada (simples, direta, emocional, dramática)
-7. Tipo de frases (curtas, impactantes, uso de perguntas retóricas)
-8. Clima geral do vídeo (medo, mistério, tragédia, reflexão, choque)
-9. Forma como o narrador se comunica com o espectador
-10. Estratégias usadas para manter retenção até o final
-
-Dê prioridade máxima aos vídeos com maior número de visualizações.
-
----
-
-OBJETIVO DO ROTEIRO
-
-Criar um roteiro original que mantenha:
-
-- O mesmo hook
-- O mesmo clima emocional
-- O mesmo tom narrativo
-- O mesmo ritmo
-- A mesma forma de escrita
-- A mesma sensação de vídeo viral
-
-O espectador deve sentir que está assistindo a um vídeo do mesmo canal.
-
----
-
-FORMATO DA ENTREGA
-
-1. TÍTULO DO VÍDEO  
-- Mesmo estilo dos títulos do canal  
-- Curto, intrigante e emocional  
-- Criando curiosidade imediata  
-
-2. HOOK INICIAL (5 a 15 segundos)  
-- Forte e impactante  
-- Misterioso  
-- Criando curiosidade extrema  
-- Sem revelar o desfecho  
-
-3. ROTEIRO COMPLETO  
-- Escrita fluida e envolvente  
-- Narrativa contínua  
-- Frases cinematográficas e emocionais  
-- Crescimento progressivo de tensão  
-- Uso estratégico de pausas  
-- Final forte, coerente com o estilo do canal  
-
-4. ESTILO DE ESCRITA  
-- Mesmo vocabulário  
-- Mesmo tom  
-- Mesmo nível de dramaticidade  
-- Linguagem natural, humana e envolvente  
-
----
-
-O QUE EVITAR
-
-- Linguagem genérica  
-- Tom neutro ou robótico  
-- Estrutura padrão de roteiro comum  
-- Qualquer sinal de escrita artificial  
-" },
-            2: { title: "Analista de SEO", text: "Especialista em SEO..." },
-            3: { title: "Criação de Personagem", text: "Desenvolva uma persona..." },
-            4: { title: "Prompt 4", text: "Conteúdo 4..." },
-            5: { title: "Prompt 5", text: "Conteúdo 5..." },
-            6: { title: "Prompt 6", text: "Conteúdo 6..." }
+            1: { title: "Modelar Roteiro Viral", text: "Conteúdo do Prompt 1..." },
+            2: { title: "Estrategista de Reels", text: "Conteúdo do Prompt 2..." },
+            3: { title: "Prompt 3", text: "Conteúdo do Prompt 3..." },
+            4: { title: "Prompt 4", text: "Conteúdo do Prompt 4..." },
+            5: { title: "Prompt 5", text: "Conteúdo do Prompt 5..." },
+            6: { title: "Prompt 6", text: "Conteúdo do Prompt 6..." }
         };
 
         let currentId = 1;
 
-        function loadPrompt(id) {
-            currentId = id;
-            const p = promptLibrary[id];
-            document.getElementById('prompt-title').innerText = p.title;
-            document.getElementById('prompt-area').value = p.text;
-            document.getElementById('step-text').innerText = "PASSO " + id;
+        // Verifica se o usuário já se inscreveu antes
+        function verificarESapiar() {
+            const inscrito = localStorage.getItem('apexia_inscrito');
+            
+            if (inscrito === 'true') {
+                executarCopia();
+            } else {
+                document.getElementById('modal-trava').style.display = 'flex';
+            }
         }
 
-        function nextPrompt() {
-            currentId = currentId >= 6 ? 1 : currentId + 1;
-            loadPrompt(currentId);
-        }
+        // Envia o formulário e libera o navegador
+        const form = document.getElementById('form-inscricao');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerText = "Processando...";
 
-        function prevPrompt() {
-            currentId = currentId <= 1 ? 6 : currentId - 1;
-            loadPrompt(currentId);
-        }
+            // Envia para o Formspree
+            const formData = new FormData(form);
+            await fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
 
-        function copyPrompt() {
+            // Salva no navegador que ele já se inscreveu
+            localStorage.setItem('apexia_inscrito', 'true');
+            
+            // Fecha o modal e copia
+            document.getElementById('modal-trava').style.display = 'none';
+            executarCopia();
+        };
+
+        function executarCopia() {
             const area = document.getElementById('prompt-area');
             area.select();
             navigator.clipboard.writeText(area.value);
+            
             const toast = document.getElementById('toast');
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
         }
+
+        function loadPrompt(id) {
+            currentId = id;
+            document.getElementById('prompt-title').innerText = promptLibrary[id].title;
+            document.getElementById('prompt-area').value = promptLibrary[id].text;
+            document.getElementById('step-text').innerText = "PASSO " + id;
+        }
+
+        function nextPrompt() { currentId = currentId >= 6 ? 1 : currentId + 1; loadPrompt(currentId); }
+        function prevPrompt() { currentId = currentId <= 1 ? 6 : currentId - 1; loadPrompt(currentId); }
 
         let isBig = false;
         function toggleAvatarSize() {
