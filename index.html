@@ -1,86 +1,235 @@
-<img src="img/avatar.png">
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>ApexIA – Biblioteca de Prompts</title>
+    <title>ApexIA – AI Inspirational Workflow</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Importando a fonte Inter para um visual moderno -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --primary-color: #7c3aed; /* Roxo principal */
+            --primary-hover: #9333ea;
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border-color: #262626;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0a0a0a;
-            color: #ffffff;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Header / Navbar Estilo Zapiwala */
+        nav {
+            padding: 20px 5%;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            color: var(--text-main);
+            text-decoration: none;
         }
 
         .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 40px 20px;
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        /* Breadcrumbs & Badge */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            background: rgba(124, 58, 237, 0.1);
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
         }
 
         h1 {
-            text-align: center;
             font-size: 2.5rem;
-            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
         }
 
-        p {
-            text-align: center;
-            color: #aaaaaa;
-            margin-bottom: 50px;
+        /* Autor Info */
+        .author-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
         }
 
+        .author-box img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border-color);
+        }
+
+        .author-info span {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* Prompt Card */
         .prompt-card {
-            background-color: #111111;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: var(--text-main);
         }
 
         textarea {
             width: 100%;
-            height: 250px;
+            height: 350px;
             background-color: #000000;
-            color: #ffffff;
-            border: 1px solid #333333;
-            border-radius: 8px;
-            padding: 15px;
-            font-size: 14px;
+            color: #d1d5db;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
             resize: none;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
         }
 
-        button {
-            margin-top: 15px;
-            padding: 12px 25px;
+        textarea:focus {
+            border-color: var(--primary-color);
+        }
+
+        /* Botão de Cópia Customizado */
+        .btn-copy {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
-            background-color: #7c3aed;
-            color: #fff;
+            border-radius: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
-        button:hover {
-            background-color: #9333ea;
+        .btn-copy:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-copy:active {
+            transform: translateY(0);
         }
 
         .footer {
             text-align: center;
-            color: #777777;
-            margin-top: 50px;
+            color: var(--text-dim);
+            margin: 80px 0 40px;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
         }
+
+        /* Toast de notificação */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #10b981;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 101;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 600;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
     </style>
 </head>
 <body>
+
+    <nav>
+        <a href="#" class="logo">ApexIA</a>
+        <div style="color: var(--text-dim); font-size: 0.9rem;">Premium Prompts</div>
+    </nav>
+
     <div class="container">
-        <h1>ApexIA</h1>
-        <p>Biblioteca de prompts. Clique no botão para copiar automaticamente.</p>
+        <div class="badge">Workflow Prompt</div>
+        <h1>Prompt Especialista em Canal Dark</h1>
+        
+        <div class="author-box">
+            <img src="img/avatar.png" alt="Avatar ApexIA">
+            <div class="author-info">
+                <strong>Equipe ApexIA</strong>
+                <span>Atualizado em Janeiro de 2026</span>
+            </div>
+        </div>
 
         <div class="prompt-card">
-            <h2>Prompt – Canal Dark</h2>
-            <textarea id="prompt1" readonly>
-Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
+            <div class="card-header">
+                <h2>Conteúdo do Prompt</h2>
+                <span style="font-size: 0.8rem; color: var(--text-dim);">Texto Otimizado para GPT-4/Claude</span>
+            </div>
+            
+            <textarea id="prompt1" readonly>Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
 
 Vou colar abaixo LINKS de vídeos de um canal específico.  
 Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
@@ -92,110 +241,39 @@ REGRAS FUNDAMENTAIS:
 - O roteiro deve parecer escrito pela mesma pessoa do canal analisado
 
 ---
-
-ANÁLISE OBRIGATÓRIA DOS VÍDEOS
-
-Antes de escrever o roteiro, analise cuidadosamente:
-
-1. Estrutura do vídeo (abertura, desenvolvimento e final)
-2. Tipo de hook usado nos primeiros 5 a 15 segundos
-3. Tom da narração (sombrio, misterioso, emocional, tenso, reflexivo, chocante, etc.)
-4. Ritmo da história (lento, crescente, com pausas estratégicas)
-5. Forma de criar curiosidade e suspense
-6. Linguagem utilizada (simples, direta, emocional, dramática)
-7. Tipo de frases (curtas, impactantes, uso de perguntas retóricas)
-8. Clima geral do vídeo (medo, mistério, tragédia, reflexão, choque)
-9. Forma como o narrador se comunica com o espectador
-10. Estratégias usadas para manter retenção até o final
-
-Dê prioridade máxima aos vídeos com maior número de visualizações.
-
----
-
-OBJETIVO DO ROTEIRO
-
-Criar um roteiro original que mantenha:
-
-- O mesmo hook
-- O mesmo clima emocional
-- O mesmo tom narrativo
-- O mesmo ritmo
-- A mesma forma de escrita
-- A mesma sensação de vídeo viral
-
-O espectador deve sentir que está assistindo a um vídeo do mesmo canal.
-
----
-
-FORMATO DA ENTREGA
-
-1. TÍTULO DO VÍDEO  
-- Mesmo estilo dos títulos do canal  
-- Curto, intrigante e emocional  
-- Criando curiosidade imediata  
-
-2. HOOK INICIAL (5 a 15 segundos)  
-- Forte e impactante  
-- Misterioso  
-- Criando curiosidade extrema  
-- Sem revelar o desfecho  
-
-3. ROTEIRO COMPLETO  
-- Escrita fluida e envolvente  
-- Narrativa contínua  
-- Frases cinematográficas e emocionais  
-- Crescimento progressivo de tensão  
-- Uso estratégico de pausas  
-- Final forte, coerente com o estilo do canal  
-
-4. ESTILO DE ESCRITA  
-- Mesmo vocabulário  
-- Mesmo tom  
-- Mesmo nível de dramaticidade  
-- Linguagem natural, humana e envolvente  
-
----
-
-O QUE EVITAR
-
-- Linguagem genérica  
-- Tom neutro ou robótico  
-- Estrutura padrão de roteiro comum  
-- Qualquer sinal de escrita artificial  
-
----
-
-IMPORTANTE
-
-Utilize principalmente os vídeos mais assistidos como base de estilo.
-
-O roteiro deve demonstrar domínio completo do padrão narrativo do canal analisado.
-
----
-
-LINKS DOS VÍDEOS DE REFERÊNCIA:
-(Cole todos os links aqui)
-
+(Resta do seu prompt aqui...)
             </textarea>
-            <br>
-            <button onclick="copiarPrompt('prompt1')">Copiar Prompt</button>
+            
+            <button class="btn-copy" onclick="copiarPrompt('prompt1')">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                Copiar Prompt
+            </button>
         </div>
 
         <div class="footer">
-            © 2026 • ApexIA • Conteúdo exclusivo para inscritos
+            © 2026 • <strong>ApexIA</strong> • Transformando ideias em autoridade digital.
         </div>
     </div>
+
+    <div id="toast">Copiado com sucesso!</div>
 
     <script>
         function copiarPrompt(id) {
             var campo = document.getElementById(id);
             campo.select();
             campo.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-            alert("Prompt copiado com sucesso!");
+            
+            // Usando API moderna de clipboard
+            navigator.clipboard.writeText(campo.value).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            var x = document.getElementById("toast");
+            x.className = "show";
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
         }
     </script>
 </body>
 </html>
-
-
