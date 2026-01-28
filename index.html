@@ -229,14 +229,14 @@
         <a href="#" class="logo">ApexIA</a>
         <ul class="nav-links">
             <li>
-                <a>PROMPTS ADICIONAIS ▾</a>
+                <a>PROMPTS ▾</a>
                 <div class="dropdown">
-                    <a onclick="loadPrompt(1)">EM BREVE</a>
-                    <a onclick="loadPrompt(2)">EM BREVE</a>
-                    <a onclick="loadPrompt(3)">EM BREVE</a>
-                    <a onclick="loadPrompt(4)">EM BREVE</a>
-                    <a onclick="loadPrompt(5)">PEM BREVE</a>
-                    <a onclick="loadPrompt(6)">EM BREVE</a>
+                    <a onclick="loadPrompt(1)">Prompt 1</a>
+                    <a onclick="loadPrompt(2)">Prompt 2</a>
+                    <a onclick="loadPrompt(3)">Prompt 3</a>
+                    <a onclick="loadPrompt(4)">Prompt 4</a>
+                    <a onclick="loadPrompt(5)">Prompt 5</a>
+                    <a onclick="loadPrompt(6)">Prompt 6</a>
                 </div>
             </li>
         </ul>
@@ -285,12 +285,9 @@
 
     <div id="toast">Copiado com sucesso!</div>
 
-  <script>
-        // EDITAR PROMPTS AQUI
+    <script>
         const promptLibrary = {
-            1: {
-                title: "Modelar Roteiro Viral",
-                text: "Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
+            1: { title: "Modelar Roteiro Viral", text: "Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
 
 Vou colar abaixo LINKS de vídeos de um canal específico.  
 Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
@@ -372,28 +369,12 @@ O QUE EVITAR
 - Tom neutro ou robótico  
 - Estrutura padrão de roteiro comum  
 - Qualquer sinal de escrita artificial  
-"
-            },
-            2: {
-                title: "Em Breve1",
-                text: "Atue como um especialista em SEO... [CONTEÚDO DO PROMPT 2]"
-            },
-            3: {
-                title: "Em Breve 1",
-                text: "Desenvolva uma persona detalhada para... [CONTEÚDO DO PROMPT 3]"
-            },
-            4: {
-                title: "Prompt Genérico 4",
-                text: "Edite este texto no código conforme sua necessidade... [PROMPT 4]"
-            },
-            5: {
-                title: "Prompt Genérico 5",
-                text: "Edite este texto no código conforme sua necessidade... [PROMPT 5]"
-            },
-            6: {
-                title: "Prompt Genérico 6",
-                text: "Edite este texto no código conforme sua necessidade... [PROMPT 6]"
-            }
+" },
+            2: { title: "Analista de SEO", text: "Especialista em SEO..." },
+            3: { title: "Criação de Personagem", text: "Desenvolva uma persona..." },
+            4: { title: "Prompt 4", text: "Conteúdo 4..." },
+            5: { title: "Prompt 5", text: "Conteúdo 5..." },
+            6: { title: "Prompt 6", text: "Conteúdo 6..." }
         };
 
         let currentId = 1;
@@ -420,7 +401,6 @@ O QUE EVITAR
             const area = document.getElementById('prompt-area');
             area.select();
             navigator.clipboard.writeText(area.value);
-            
             const toast = document.getElementById('toast');
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
@@ -434,10 +414,7 @@ O QUE EVITAR
             isBig = !isBig;
         }
 
-        // Iniciar
         loadPrompt(1);
     </script>
 </body>
 </html>
-
-
