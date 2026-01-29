@@ -56,13 +56,13 @@
 
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 32px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
         
-        /* FOTO COM ZOOM SUTIL */
+        /* EFEITO ZOOM NA FOTO */
         .avatar { 
             width: 85px; height: 85px; border-radius: 50%; margin-bottom: 25px; 
             border: 3px solid var(--primary); padding: 4px; 
             transition: transform 0.4s ease; cursor: pointer;
         }
-        .avatar:hover { transform: scale(1.1); }
+        .avatar:hover { transform: scale(1.15); }
 
         textarea { 
             width: 100%; height: 450px; background: #000; color: #e2e8f0; 
@@ -74,21 +74,11 @@
         .btn-main { background: #fff; color: #000; border: none; padding: 22px; border-radius: 16px; font-weight: 900; font-size: 1.1rem; cursor: pointer; width: 100%; transition: 0.3s; text-transform: uppercase; }
         .btn-main:hover { background: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4); }
 
-        /* Modal VIP */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(20px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
         .modal-box { background: #111; border: 1px solid var(--primary); padding: 45px; border-radius: 35px; width: 100%; max-width: 480px; text-align: center; }
-        
         .security-badge { background: rgba(34, 197, 94, 0.1); color: var(--green); padding: 6px 15px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(34, 197, 94, 0.2); }
-        
         .input-field { width: 100%; padding: 16px; background: #000; border: 1px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; font-size: 1rem; }
-        .input-field:focus { border-color: var(--primary); }
-
-        .btn-green { 
-            background: var(--green); color: #000; width: 100%; padding: 20px; 
-            border-radius: 14px; font-weight: 900; border: none; cursor: pointer; 
-            margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;
-            transition: 0.4s;
-        }
+        .btn-green { background: var(--green); color: #000; width: 100%; padding: 20px; border-radius: 14px; font-weight: 900; border: none; cursor: pointer; margin-top: 10px; text-transform: uppercase; transition: 0.4s; }
         .btn-green:hover { background: #fff; transform: scale(1.02); color: var(--green); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
 
         #toast { visibility: hidden; background: #fff; color: #000; padding: 15px 35px; border-radius: 50px; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); font-weight: 800; z-index: 3000; }
@@ -135,7 +125,6 @@
         </div>
     </div>
 
-    <!-- Modal VIP -->
     <div class="modal" id="modal-lock">
         <div class="modal-box">
             <span class="security-badge">🔒 Conexão Segura Criptografada</span>
@@ -173,8 +162,7 @@
                 title: "Modelar Roteiro Viral", 
                 content: `Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
 
-Vou colar abaixo LINKS de vídeos de um canal específico.  
-Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
+Vou colar abaixo LINKS de vídeos de um canal específico. Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
 
 REGRAS FUNDAMENTAIS:
 - Não copiar frases literais
@@ -183,50 +171,39 @@ REGRAS FUNDAMENTAIS:
 - O roteiro deve parecer escrito pela mesma pessoa do canal analisado
 
 ---
-ANÁLISE OBRIGATÓRIA DOS VÍDEOS
-Antes de escrever o roteiro, analise cuidadosamente:
-1. Estrutura do vídeo (abertura, desenvolvimento e final)
-2. Tipo de hook usado nos primeiros 5 a 15 segundos
-3. Tom da narração (sombrio, misterioso, emocional, tenso, reflexivo, chocante, etc.)
-4. Ritmo da história (lento, crescente, com pausas estratégicas)
-5. Forma de criar curiosidade e suspense
-6. Linguagem utilizada (simples, direta, emocional, dramática)
-7. Tipo de frases (curtas, impactantes, uso de perguntas retóricas)
-8. Clima geral do vídeo (medo, mistério, tragédia, reflexão, choque)
-9. Forma como o narrador se comunica com o espectador
-10. Estratégias usadas para manter retenção até o final
+ANÁLISE OBRIGATÓRIA DOS VÍDEOS:
+1. Estrutura do vídeo
+2. Tipo de hook
+3. Tom da narração
+4. Ritmo da história
+5. Forma de criar curiosidade
+6. Linguagem utilizada
+7. Estratégias de retenção
 
-Dê prioridade máxima aos vídeos com maior número de visualizações.
-
----
-OBJETIVO DO ROTEIRO
-Criar um roteiro original que mantenha o mesmo hook, tom e ritmo. O espectador deve sentir que está assistindo a um vídeo do mesmo canal.
-
-LINKS DOS VÍDEOS DE REFERÊNCIA:
-(Cole todos os links aqui)` 
+OBJETIVO DO ROTEIRO:
+Criar um roteiro original que mantenha o mesmo hook, tom e ritmo. O espectador deve sentir que está assistindo a um vídeo do mesmo canal.` 
             },
             2: { 
                 title: "Narração IA de Voz", 
-                content: `Este roteiro NÃO será falado por um humano.
-Será narrado por uma IA de voz no Google Studio Audio, usando um personagem virtual.
+                content: `Este roteiro NÃO será falado por um humano. Será narrado por uma IA de voz no Google Studio Audio.
 
 TAREFA 1 — EXTRAÇÃO DO TEXTO DE NARRAÇÃO:
-- Extrair APENAS o texto que deve ser falado
-- Remover completamente: minutagens, explicações técnicas, títulos de blocos e instruções internas.
+- Extrair APENAS o texto que deve ser falado.
+- Remover minutagens, títulos de blocos e instruções internas.
 - O texto deve fluir como uma fala contínua e natural.
 
 REQUISITOS DO TEXTO:
 - Português claro e neutro.
-- Frases médias e curtas. Ritmo que favoreça retenção.
+- Frases médias e curtas.
 - Sem jargões técnicos sem explicação.
 - Escrito exatamente como deve ser falado.
 
 IMPORTANTE:
-- Manter os ganchos naturais e frases de curiosidade.
+- Manter os ganchos naturais e as frases de curiosidade.
 - O texto final deve estar PRONTO PARA SER COLADO diretamente numa IA de voz.
 
 FORMATO DE ENTREGA:
-- Apenas o texto da narração pronto para uso.` 
+- Apenas o texto da narração.` 
             },
             3: { title: "Persona Criativa", content: `Em breve...` },
             4: { title: "Copywriter Pro", content: `Em breve...` },
@@ -235,6 +212,7 @@ FORMATO DE ENTREGA:
         };
 
         let currentId = 1;
+
         function loadPrompt(id) {
             currentId = id;
             if(library[id]) {
@@ -243,18 +221,19 @@ FORMATO DE ENTREGA:
                 document.getElementById('step-label').innerText = `Passo ${id} de 6`;
             }
         }
+
         function next() { currentId = (currentId % 6) + 1; loadPrompt(currentId); }
         function prev() { currentId = (currentId === 1) ? 6 : currentId - 1; loadPrompt(currentId); }
 
         function handleCopy() {
-            if (localStorage.getItem('apexia_unlocked_final') === 'true') { copy(); } 
+            if (localStorage.getItem('apexia_vip_unlocked') === 'true') { copy(); } 
             else { document.getElementById('modal-lock').style.display = 'flex'; }
         }
 
         document.getElementById('lead-form').onsubmit = async (e) => {
             e.preventDefault();
             await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
-            localStorage.setItem('apexia_unlocked_final', 'true');
+            localStorage.setItem('apexia_vip_unlocked', 'true');
             document.getElementById('modal-lock').style.display = 'none';
             copy();
         };
@@ -265,7 +244,7 @@ FORMATO DE ENTREGA:
             navigator.clipboard.writeText(area.value);
             const t = document.getElementById('toast');
             t.className = "show";
-            setTimeout(() => t.className = ""; }, 3000);
+            setTimeout(() => { t.className = ""; }, 3000);
         }
         loadPrompt(1);
     </script>
