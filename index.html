@@ -1,218 +1,373 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ApexiA V.1.0 | Mentor Supremo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <title>ApexIA – VIP Prompt Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #00FF00; --bg-sidebar: #080808; --bg-chat: #030303; --border: rgba(0, 255, 0, 0.15); --text: #F5F5F7; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        body, html { font-family: 'Inter', sans-serif; background-color: var(--bg-chat); color: var(--text); height: 100dvh; width: 100vw; overflow: hidden; }
-        .smoke-bg { position: fixed; inset: 0; background: radial-gradient(circle at 50% 50%, #0a200a 0%, #030303 100%); z-index: -1; }
-        #login-screen { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
-        .logo-login { width: 140px; height: 140px; border-radius: 50%; border: 3px solid var(--primary); box-shadow: 0 0 40px rgba(0, 255, 0, 0.4); margin-bottom: 25px; object-fit: cover; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-        #selection-menu { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; width: 100vw; text-align: center; background: rgba(0,0,0,0.95); z-index: 8888; position: fixed; }
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 900px; padding: 20px; }
-        .menu-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 40px 20px; border-radius: 24px; cursor: pointer; transition: 0.3s; }
-        .menu-card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(0,255,0,0.05); }
-        #app-container { display: none; height: 100dvh; width: 100vw; flex-direction: row; }
-        #sidebar { width: 300px; background: var(--bg-sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; transition: transform 0.3s ease; }
-        #main-chat { flex: 1; display: flex; flex-direction: column; background: var(--bg-chat); height: 100dvh; min-width: 0; position: relative; }
-        header { padding: 15px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: #000; }
-        #dashboard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 12px; border-bottom: 1px solid var(--border); background: #050505; }
-        .stat-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 10px; border-radius: 12px; text-align: center; }
-        .stat-card label { font-size: 0.5rem; color: #666; font-weight: 900; text-transform: uppercase; display: block; }
-        .stat-card span { font-size: 0.9rem; font-weight: 900; color: var(--primary); }
-        #chat-window { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .msg { max-width: 85%; padding: 14px 18px; border-radius: 18px; line-height: 1.6; font-size: 0.95rem; word-wrap: break-word; }
-        .ai { align-self: flex-start; background: transparent; border-left: 3px solid var(--primary); border-radius: 0; white-space: pre-wrap; }
-        .user { align-self: flex-end; background: var(--primary); color: #000; font-weight: 600; border-radius: 20px 20px 2px 20px; }
-        .msg img { max-width: 100%; max-height: 280px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--border); display: block; }
-        .input-area { padding: 15px; border-top: 1px solid var(--border); background: #000; }
-        .input-wrapper { max-width: 900px; margin: 0 auto; display: flex; gap: 10px; align-items: center; background: #0a0a0a; padding: 10px 18px; border-radius: 35px; border: 1px solid var(--border); }
-        input { flex: 1; background: transparent; border: none; color: #fff; outline: none; font-size: 1rem; padding: 5px; }
-        @media (max-width: 768px) { #sidebar { position: fixed; left: 0; top: 0; bottom: 0; transform: translateX(-100%); z-index: 9000; } #sidebar.open { transform: translateX(0); } #app-container { flex-direction: column; } }
-        @media (min-width: 769px) { #app-container { display: flex; } #dashboard { grid-template-columns: repeat(4, 1fr); } }
-        .thinking { display: flex; align-items: center; gap: 10px; padding: 15px; color: var(--primary); font-size: 0.8rem; font-weight: 800; }
-        .thinking img { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--primary); animation: pulse 1.5s infinite; }
+        :root {
+            --bg: #0a0a0a;
+            --primary: #8b5cf6;
+            --primary-hover: #7c3aed;
+            --card-bg: #141414;
+            --border: rgba(255, 255, 255, 0.1);
+            --text-p: #ffffff;
+            --text-s: #94a3b8;
+            --green: #22c55e;
+            --green-hover: #16a34a;
+        }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-p); overflow-x: hidden; }
+
+        .glow { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); width: 100%; height: 500px; background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%); z-index: -1; }
+
+        nav { 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 25px 5%; border-bottom: 1px solid var(--border); 
+            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000;
+            background: rgba(10, 10, 10, 0.8);
+        }
+        
+        .nav-top { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .logo { font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 900; letter-spacing: -1px; color: #fff; text-decoration: none; }
+        
+        .phrase-rotator { 
+            font-size: 1.1rem; color: var(--primary); font-weight: 800; 
+            text-transform: uppercase; letter-spacing: 2px; text-align: center;
+            height: 1.5rem; transition: 0.5s ease;
+        }
+
+        .dropdown-trigger { background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 8px 20px; border-radius: 30px; color: #fff; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+        .dropdown-container { position: relative; }
+        .dropdown-menu { position: absolute; top: 45px; right: 0; background: #1a1a1a; border: 1px solid var(--border); border-radius: 12px; display: none; width: 240px; padding: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .dropdown-container:hover .dropdown-menu { display: block; }
+        .dropdown-menu a { display: block; padding: 12px; color: var(--text-s); text-decoration: none; font-size: 0.9rem; border-radius: 8px; cursor: pointer; }
+        .dropdown-menu a:hover { background: var(--primary); color: #fff; }
+
+        .main { max-width: 850px; margin: 40px auto; padding: 0 24px; text-align: center; }
+        .step-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .step-info { font-family: 'Outfit'; font-weight: 800; font-size: 1rem; color: var(--text-s); text-transform: uppercase; }
+        .btn-nav { background: #1a1a1a; border: 1px solid var(--border); color: #fff; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; transition: 0.3s; font-size: 1.2rem; }
+        .btn-nav:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.1); }
+
+        h1 { font-family: 'Outfit', sans-serif; font-size: 2.8rem; font-weight: 900; letter-spacing: -2px; margin-bottom: 30px; line-height: 1.1; }
+
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 32px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        
+        /* EFEITO ZOOM NA FOTO */
+        .avatar { 
+            width: 85px; height: 85px; border-radius: 50%; margin-bottom: 25px; 
+            border: 3px solid var(--primary); padding: 4px; 
+            transition: transform 0.4s ease; cursor: pointer;
+        }
+        .avatar:hover { transform: scale(1.15); }
+
+        textarea { 
+            width: 100%; height: 450px; background: #000; color: #e2e8f0; 
+            border: 1px solid var(--border); border-radius: 20px; padding: 25px; 
+            font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.6; 
+            resize: none; outline: none; margin-bottom: 25px; 
+        }
+
+        .btn-main { background: #fff; color: #000; border: none; padding: 22px; border-radius: 16px; font-weight: 900; font-size: 1.1rem; cursor: pointer; width: 100%; transition: 0.3s; text-transform: uppercase; }
+        .btn-main:hover { background: var(--primary); color: #fff; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4); }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(20px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-box { background: #111; border: 1px solid var(--primary); padding: 45px; border-radius: 35px; width: 100%; max-width: 480px; text-align: center; }
+        .security-badge { background: rgba(34, 197, 94, 0.1); color: var(--green); padding: 6px 15px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .input-field { width: 100%; padding: 16px; background: #000; border: 1px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; font-size: 1rem; }
+        .btn-green { background: var(--green); color: #000; width: 100%; padding: 20px; border-radius: 14px; font-weight: 900; border: none; cursor: pointer; margin-top: 10px; text-transform: uppercase; transition: 0.4s; }
+        .btn-green:hover { background: #fff; transform: scale(1.02); color: var(--green); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+
+        #toast { visibility: hidden; background: #fff; color: #000; padding: 15px 35px; border-radius: 50px; position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); font-weight: 800; z-index: 3000; }
+        #toast.show { visibility: visible; }
     </style>
 </head>
 <body>
-    <div class="smoke-bg"></div>
-    <div id="login-screen">
-        <img src="logo.png" class="logo-login" onerror="this.src='https://via.placeholder.com/150/00FF00/000000?text=ApexIA'">
-        <h1 style="font-size: 3rem; font-weight: 900; letter-spacing: -3px;">APEX<span>IA</span> V.1.0</h1>
-        <button onclick="iniciarLogin()" style="background:var(--primary); color:#000; padding:18px 45px; border-radius:50px; border:none; font-weight:900; cursor:pointer; margin-top:30px;">ACESSAR COMANDO</button>
-    </div>
-    <div id="selection-menu">
-        <h2 style="font-weight: 900; font-size: 2.5rem; margin-bottom: 30px;">HUB <span style="color:var(--primary)">APEXIA</span></h2>
-        <div class="menu-grid">
-            <div class="menu-card" onclick="irParaMentoria()">
-                <div style="font-size: 3rem;">🧠</div>
-                <h3 style="color:var(--primary); margin:10px 0;">Mentor Supremo</h3>
-                <p style="color:#888; font-size:0.9rem;">Análise técnica profunda e estratégica do seu canal.</p>
-            </div>
-            <div class="menu-card" onclick="window.open('https://apexia-oficcial.github.io/ApexIA/', '_blank')">
-                <div style="font-size: 3rem;">⚡</div>
-                <h3 style="color:var(--primary); margin:10px 0;">Arsenal de Prompts</h3>
-                <p style="color:#888; font-size:0.9rem;">Biblioteca master para dominar o algoritmo.</p>
-            </div>
-        </div>
-        <button onclick="logout()" style="margin-top:40px; color:#555; background:none; border:none; cursor:pointer; font-weight:800;">DESCONECTAR</button>
-    </div>
-    <div id="app-container">
-        <nav id="sidebar">
-            <div style="padding:20px; border-bottom:1px solid var(--border);">
-                <button style="width:100%; padding:12px; border-radius:10px; background:rgba(0,255,0,0.1); color:var(--primary); border:1px solid var(--primary); font-weight:800; cursor:pointer;" onclick="novoChat()">+ NOVO PROTOCOLO</button>
-            </div>
-            <div id="history-list" style="flex:1; overflow-y:auto; padding:10px;"></div>
-            <div style="padding:15px; border-top:1px solid var(--border);">
-                <button onclick="voltarAoHub()" style="color:var(--primary); background:none; border:none; font-size:0.75rem; font-weight:800; cursor:pointer; margin-bottom:10px; display:block;">← VOLTAR AO HUB</button>
-                <button onclick="logout()" style="color:#555; background:none; border:none; font-size:0.75rem; font-weight:800; cursor:pointer;">SAIR DO SISTEMA</button>
-            </div>
-        </nav>
-        <main id="main-chat">
-            <header>
-                <button onclick="toggleSidebar()" style="background:none; border:none; color:var(--primary); font-size:1.5rem;" id="menu-btn">☰</button>
-                <div style="font-weight: 900;">APEXIA <span style="color:var(--primary)">V.1.0</span></div>
-                <div id="chan-label" style="font-size: 0.6rem; color: #555;">...</div>
-            </header>
-            <div id="dashboard">
-                <div class="stat-card"><label>Inscritos</label><span id="d-subs">---</span></div>
-                <div class="stat-card"><label>Total Views</label><span id="d-views">---</span></div>
-                <div class="stat-card"><label>Vídeos</label><span id="d-vids">---</span></div>
-                <div class="stat-card"><label>Status</label><span style="color:var(--primary)">ELITE</span></div>
-            </div>
-            <div id="chat-window"></div>
-            <div class="input-area">
-                <div class="input-wrapper">
-                    <button style="background:none; border:none; color:var(--primary); font-size:1.3rem; cursor:pointer;" onclick="document.getElementById('file-input').click()">📎</button>
-                    <input type="file" id="file-input" style="display:none" accept="image/*" onchange="handleImage(this)">
-                    <input type="text" id="user-input" placeholder="Comando de Growth...">
-                    <button style="background:var(--primary); color:#000; width:38px; height:38px; border-radius:50%; border:none; font-weight:900; cursor:pointer;" onclick="enviar()">→</button>
+
+    <div class="glow"></div>
+
+    <nav>
+        <div class="nav-top">
+            <a href="#" class="logo">ApexIA</a>
+            <div class="dropdown-container">
+                <div class="dropdown-trigger">BIBLIOTECA DE PROMPTS ▾</div>
+                <div class="dropdown-menu">
+                    <a onclick="loadPrompt(1)">01. Modelar Roteiro Viral</a>
+                    <a onclick="loadPrompt(2)">02. Narração IA de Voz</a>
+                    <a onclick="loadPrompt(3)">03. Engenharia de Voz & Parâmetros IA</a>
+                    <a onclick="loadPrompt(4)">04. Inserção Automática de Marcações de Narração</a>
+                    <a onclick="loadPrompt(5)">05. Fluxo de Criação: Imagem & Vídeo</a>
+                    <a onclick="loadPrompt(6)">06. Análise de Nicho</a>
                 </div>
             </div>
-        </main>
-    </div>
-    <script>
-        const CLIENT_ID = "145100322345-70nlh619s577puk5c75u19trip13nkme.apps.googleusercontent.com";
-        const BACKEND_URL = "https://apexia-backend.vercel.app/api/mentor";
+        </div>
+        <div class="phrase-rotator" id="rotate-text">LIBERTE O SEU POTENCIAL...</div>
+    </nav>
+
+    <div class="main">
+        <div class="step-nav">
+            <span class="step-info" id="step-label">Passo 1 de 6</span>
+            <div class="nav-buttons">
+                <button class="btn-nav" onclick="prev()">❮</button>
+                <button class="btn-nav" onclick="next()">❯</button>
+            </div>
+        </div>
+
+        <h1 id="title">Modelar Roteiro Viral</h1>
         
-        const mentorYouTubePrompt = "Algoritmo do YouTube com domínio total sobre retenção, CTR, watch time, impressões e recomendações, crescimento orgânico e estratégico de canais, análise avançada de gráficos e métricas, psicologia do criador de conteúdo, branding, posicionamento e diferenciação de canais, criação de títulos, thumbnails, storytelling e retenção, compreensão do comportamento do público e tomada de decisão baseada em dados, atuando para servir como mentor, guia e estrategista pessoal de cada inscrito que solicitar ajuda, sempre com postura de mentor humano, experiente, calmo, confiante e motivador, sem respostas genéricas, oferecendo análises personalizadas para cada canal, avaliando profundamente tudo que o usuário enviar, incluindo prints ou imagens do YouTube Studio, gráficos de visualizações, retenção de público, CTR, impressões, tempo médio de exibição, descrição do canal, nicho e objetivo do criador, com capacidade de ler e interpretar gráficos explicando o que está bom, o que está errado, o que está travando o crescimento e o que o algoritmo está tentando comunicar, explicando sempre o que cada gráfico mostra, como o algoritmo interpreta os dados, qual o impacto no crescimento do canal e apresentando ações práticas, claras e priorizadas sobre o que mudar, melhorar ou repetir, tendo como objetivo principal ajudar qualquer canal a crescer independentemente do tamanho, seja pequeno, médio, parado, desmotivado ou com poucas visualizações, buscando gerar clareza, direção, confiança e estratégia prática, atuando também como mentor psicológico ao compreender frustração, ansiedade por visualizações, comparação com outros canais e desmotivação, ajudando a acalmar, motivar, reposicionar a mentalidade, corrigir expectativas irreais e ensinar disciplina e visão de longo prazo, sem nunca diminuir ou humilhar o criador, orientando sempre com verdade e empatia, respondendo de forma natural a interações sociais simples mas conduzindo sempre a conversa para o crescimento do canal, utilizando linguagem clara, direta e humana, evitando termos técnicos desnecessários sem explicação, usando exemplos, analogias e passos práticos, mantendo o tom de mentor experiente e não de robô, sem inventar dados, sem prometer resultados irreais, sem enganar ou fazer suposições sem base, explicando claramente quando algo não puder ser concluído e mantendo como princípio ajudar o criador a entender o que o algoritmo vê, o que o público sente e o que precisa ser ajustado para crescer de forma consistente. REGRAS EXTRAS: Use emojis criativos (🚀, 📈, 🎨, 🧠). Nunca diga que não tem acesso aos dados, pois eles estão sendo enviados abaixo.";
+        <div class="card">
+            <img src="img/avatar.png" class="avatar" alt="User">
+            <textarea id="prompt-content" readonly></textarea>
+            <button class="btn-main" onclick="handleCopy()">COPIAR AGORA</button>
+        </div>
+    </div>
 
-        let accessToken = localStorage.getItem('apexia_token');
-        let tokenClient;
-        let chats = JSON.parse(localStorage.getItem('apexia_history_final')) || {};
-        let currentChatId = null;
-        let pendingImage = null;
-        let canalDataGlobal = "";
+    <div class="modal" id="modal-lock">
+        <div class="modal-box">
+            <span class="security-badge">🔒 Conexão Segura Criptografada</span>
+            <h2 style="font-family: 'Outfit'; font-size: 2rem; margin: 0 0 10px 0;">Acesso VIP</h2>
+            <p style="color: var(--text-s); font-size: 0.95rem; line-height: 1.5; margin-bottom: 30px;">
+                Seus dados são protegidos por criptografia. Cadastre-se para liberar os <b>PROMPTS</b> e receber <b>ATUALIZAÇÕES EXCLUSIVAS</b>.
+            </p>
+            
+            <form id="lead-form" action="https://formspree.io/f/xlgnrnqn" method="POST">
+                <input type="text" name="Nome" class="input-field" placeholder="Seu Nome Completo" required>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <select name="DDI" class="input-field" style="width: 110px;">
+                        <option value="+244">+244</option>
+                        <option value="+258">+258</option>
+                        <option value="+55">+55</option>
+                        <option value="+351">+351</option>
+                    </select>
+                    <input type="text" name="WhatsApp" class="input-field" style="flex: 1;" placeholder="WhatsApp" required>
+                </div>
+                <textarea name="Desafio" class="input-field" style="height: 90px;" placeholder="Qual seu maior desafio como criador?"></textarea>
+                <button type="submit" class="btn-green">ENTRAR PARA A COMUNIDADE</button>
+            </form>
+        </div>
+    </div>
 
-        window.onload = () => {
-            tokenClient = google.accounts.oauth2.initTokenClient({
-                client_id: CLIENT_ID,
-                scope: 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly',
-                callback: (res) => { if(res.access_token) handleAuth(res.access_token); }
-            });
-            if (accessToken) handleAuth(accessToken, true);
+    <div id="toast">COPIADO COM SUCESSO!</div>
+
+    <script>
+        const phrases = ["LIBERTE O SEU POTENCIAL...", "O TRABALHO VENCE O TALENTO.", "FAÇA PARTE DA ELITE VIP.", "ATUALIZAÇÕES EXCLUSIVAS."];
+        let pIdx = 0;
+        setInterval(() => { pIdx = (pIdx + 1) % phrases.length; document.getElementById('rotate-text').innerText = phrases[pIdx]; }, 4500);
+
+        const library = {
+            1: { 
+                title: "Modelar Roteiro Viral", 
+                content: `Você é um roteirista profissional especializado em canais dark do YouTube, com domínio avançado de storytelling, retenção de audiência, gatilhos emocionais e hooks virais.
+
+Vou colar abaixo LINKS de vídeos de um canal específico. Sua missão é analisar esses vídeos com extremo nível de detalhe, focando principalmente nos VÍDEOS MAIS ASSISTIDOS.
+
+REGRAS FUNDAMENTAIS:
+- Não copiar frases literais
+- Não plagiar histórias
+- Replicar o ESTILO, não o conteúdo
+- O roteiro deve parecer escrito pela mesma pessoa do canal analisado
+
+---
+ANÁLISE OBRIGATÓRIA DOS VÍDEOS:
+1. Estrutura do vídeo
+2. Tipo de hook
+3. Tom da narração
+4. Ritmo da história
+5. Forma de criar curiosidade
+6. Linguagem utilizada
+7. Estratégias de retenção
+
+OBJETIVO DO ROTEIRO:
+Criar um roteiro original que mantenha o mesmo hook, tom e ritmo. O espectador deve sentir que está assistindo a um vídeo do mesmo canal.` 
+            },
+            2: { 
+                title: "Narração IA de Voz", 
+                content: `Este roteiro NÃO será falado por um humano. Será narrado por uma IA de voz no Google Studio Audio.
+
+TAREFA 1 — EXTRAÇÃO DO TEXTO DE NARRAÇÃO:
+- Extrair APENAS o texto que deve ser falado.
+- Remover minutagens, títulos de blocos e instruções internas.
+- O texto deve fluir como uma fala contínua e natural.
+
+REQUISITOS DO TEXTO:
+- Português claro e neutro.
+- Frases médias e curtas.
+- Sem jargões técnicos sem explicação.
+- Escrito exatamente como deve ser falado.
+
+IMPORTANTE:
+- Manter os ganchos naturais e as frases de curiosidade.
+- O texto final deve estar PRONTO PARA SER COLADO diretamente numa IA de voz.
+
+FORMATO DE ENTREGA:
+- Apenas o texto da narração.` 
+            },
+            3: { title: "Engenharia de Voz & Parâmetros IA", content: `Assume o papel de:
+•	Especialista em análise de voz e narração para YouTube
+•	Profissional de direção de dublagem e TTS (Text-to-Speech)
+•	Consultor de retenção de audiência
+
+CONTEXTO:
+Anexei um vídeo de inspiração.
+Este vídeo será a REFERÊNCIA PRINCIPAL de voz, ritmo e entonação.
+Este projeto:
+•	NÃO usará voz humana
+•	Usará uma IA de voz (Google Studio Audio)
+•	A voz será aplicada a um personagem virtual
+•	O objetivo é alta retenção e autoridade
+
+TAREFA 1 — ANÁLISE DO VÍDEO DE INSPIRAÇÃO:
+Analisa especificamente a VOZ do vídeo e descreve de forma objetiva:
+•	Velocidade da fala (lenta, média, rápida)
+•	Ritmo (constante ou variável)
+•	Tipo de entonação (neutra, explicativa, enfática, urgente)
+•	Uso de pausas
+•	Energia emocional (baixa, média, alta)
+•	Grau de naturalidade (humano vs narrador)
+•	Estilo geral (educativo, jornalístico, documental, conversacional, autoridade)
+
+TAREFA 2 — EXTRAÇÃO DE PARÂMETROS DE VOZ:
+Com base no vídeo analisado, traduz a voz para INSTRUÇÕES TÉCNICAS que uma IA de voz entenda:
+•	Tom (grave, médio, agudo)
+•	Pitch relativo
+•	Velocidade sugerida
+•	Ritmo recomendado
+•	Intensidade emocional
+•	Estabilidade da voz
+•	Ênfase em palavras-chave
+•	Tipo de pausa (curta, média)
+
+TAREFA 3 — INSTRUÇÕES PRONTAS PARA COPIAR E COLAR:
+Cria um BLOCO ÚNICO de instruções de voz, pronto para ser colado diretamente numa IA de voz, com linguagem clara, como:
+"Fale com tom X, velocidade Y, ritmo Z..."
+Este bloco deve:
+•	Refletir fielmente a voz do vídeo de inspiração
+•	Ser adaptado para narração de YouTube
+•	Ser compatível com Google Studio Audio
+•	Não conter explicações técnicas longas
+•	Ser direto, prático e acionável
+
+TAREFA 4 — ADAPTAÇÃO AO ROTEIRO:
+Se eu fornecer um roteiro:
+•	Ajusta as instruções para esse texto específico
+•	Indica onde usar:
+• pausas naturais
+• ênfase leve
+• desaceleração estratégica
+• mudança sutil de entonação em ganchos
+
+FORMATO DE ENTREGA:
+1️⃣ Análise resumida da voz do vídeo
+2️⃣ Lista objetiva de parâmetros de voz
+3️⃣ BLOCO FINAL: “INSTRUÇÕES DE VOZ PARA IA” (pronto para copiar e colar)
+
+IMPORTANTE:
+•	Não inventar características que não estejam no vídeo
+•	Não exagerar emoção
+•	Priorizar naturalidade e retenção
+•	Pensar sempre em YouTube e atenção do espectador` 
+             },
+            4: { title: "Inserção Automática de Marcações de Narração", content: `Com base no roteiro acima, aplique automaticamente as marcações de narração que você já conhece e forneceu anteriormente, incluindo pausas, ritmo e entonação.
+
+Não altere, não remova e não reescreva nenhuma palavra do roteiro original.
+
+Apenas adicione as marcações de narração diretamente nas frases em que forem necessárias para gerar um áudio natural, engajante e realista.
+
+Não explique o processo.
+Não faça comentários` },
+            5: { title: "Fluxo de Criação: Imagem & Vídeo", content: `Você é uma IA especializada em análise narrativa e geração de PROMPTS profissionais para imagens, animações e vídeos, trabalhando com fluxo em etapas e consistência absoluta de personagens.
+
+Você NÃO deve gerar imagens nem vídeos diretamente.
+Seu trabalho é GERAR PROMPTS que serão usados em OUTRAS IAs.
+
+ENTRADA DO USUÁRIO
+O usuário irá colar UMA CENA INICIAL ou ROTEIRO em texto livre.
+Esse texto será a FONTE ÚNICA DA VERDADE.
+
+REGRAS GERAIS (OBRIGATÓRIAS)
+- Tudo deve ser gerado em português
+- Trabalhar sempre parágrafo por parágrafo
+- Nunca misturar cenas
+- Nomes de personagens devem ser: únicos, fixos e consistentes.
+- Cada personagem deve ter: nome, idade aproximada, função narrativa e descrição visual.
+- Sempre gerar conteúdo em formato copiável.
+- Nunca inventar elementos fora do roteiro.
+
+ETAPA 1 — ANÁLISE DO ROTEIRO
+Identifique: personagens envolvidos, relações, conflitos e eventos principais por parágrafo. Não emita julgamentos.
+
+ETAPA 2 — CRIAÇÃO DOS PERSONAGENS (PROMPT COPIÁVEL)
+Gere uma seção chamada: 🔹 PROMPT DE PERSONAGENS (PARA IA DE IMAGEM)
+Formato: Nome, Idade, Função, Personalidade, Postura, Expressão, Roupa, Ambiente e Estilo visual.
+
+ETAPA 3 — LISTA FINAL DE PERSONAGENS (PARA REUTILIZAÇÃO)
+Gere um bloco chamado: 🔹 LISTA DE PERSONAGENS CONSISTENTES (Nome — função — idade).
+
+ETAPA 4 — PROMPTS DE IMAGEM (CENA POR CENA)
+Crie uma seção chamada: 🔹 PROMPTS DE IMAGEM — CENA POR CENA
+Gere um prompt independente para cada parágrafo contendo: Nome da cena, Personagens, Ambiente, Emoção, Composição e Enquadramento.
+
+ETAPA 5 — PROMPTS DE ANIMAÇÃO / VÍDEO
+Crie a seção: 🔹 PROMPTS DE ANIMAÇÃO (BASEADO NA IMAGEM GERADA)
+Inclua: Nome da cena, Nome do personagem, Ação corporal, Movimento de câmera, Ritmo e Emoção.
+
+ETAPA 6 — NARRADOR E NARRAÇÃO (SE EXISTIR)
+Crie a seção: 🔹 PROMPTS DE NARRAÇÃO E AÇÃO DO NARRADOR.
+
+FORMATO DE SAÍDA FINAL
+A resposta deve ser organizada exatamente nesta ordem: Análise, Prompt de personagens, Lista de personagens, Prompts de imagem, Prompts de animação e Prompts de narração. 
+Tudo copiável, claro, sem emojis e sem explicações extras.
+
+INÍCIO DO ROTEIRO
+A partir da próxima linha, o texto fornecido pelo usuário deve ser tratado como roteiro base.
+[COLE AS CENAS AQUI]` 
+               },
+            6: { title: "Análise de Nicho", content: `Em breve...` }
         };
 
-        function iniciarLogin() { tokenClient.requestAccessToken({ prompt: 'consent' }); }
-        function logout() { localStorage.clear(); location.reload(); }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-        function voltarAoHub() { document.getElementById('app-container').style.display='none'; document.getElementById('selection-menu').style.display='flex'; }
-        function irParaMentoria() { document.getElementById('selection-menu').style.display='none'; document.getElementById('app-container').style.display='flex'; renderHistory(); if(!currentChatId) novoChat(); else selectChat(currentChatId); }
+        let currentId = 1;
 
-        function handleAuth(token, auto = false) {
-            accessToken = token; localStorage.setItem('apexia_token', token);
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('selection-menu').style.display = 'flex';
-            if(!auto) confetti({ particleCount: 150, colors: ['#00FF00', '#FFFFFF'] });
-            carregarCanal();
+        function loadPrompt(id) {
+            currentId = id;
+            if(library[id]) {
+                document.getElementById('title').innerText = library[id].title;
+                document.getElementById('prompt-content').value = library[id].content;
+                document.getElementById('step-label').innerText = `Passo ${id} de 6`;
+            }
         }
 
-        async function carregarCanal() {
-            try {
-                const res = await fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&mine=true', { headers: { 'Authorization': `Bearer ${accessToken}` } });
-                const data = await res.json();
-                const c = data.items[0];
-                document.getElementById('d-subs').innerText = Number(c.statistics.subscriberCount).toLocaleString();
-                document.getElementById('d-views').innerText = Number(c.statistics.viewCount).toLocaleString();
-                document.getElementById('d-vids').innerText = c.statistics.videoCount;
-                document.getElementById('chan-label').innerText = c.snippet.title.toUpperCase();
-                canalDataGlobal = `DADOS REAIS DO CANAL: Nome: ${c.snippet.title}, Subs: ${c.statistics.subscriberCount}, Views Totais: ${c.statistics.viewCount}, Vídeos: ${c.statistics.videoCount}.`;
-            } catch (e) { console.error("Erro API"); }
+        function next() { currentId = (currentId % 6) + 1; loadPrompt(currentId); }
+        function prev() { currentId = (currentId === 1) ? 6 : currentId - 1; loadPrompt(currentId); }
+
+        function handleCopy() {
+            if (localStorage.getItem('apexia_vip_unlocked') === 'true') { copy(); } 
+            else { document.getElementById('modal-lock').style.display = 'flex'; }
         }
 
-        function novoChat() { currentChatId = 'chat_' + Date.now(); chats[currentChatId] = { title: "Protocolo Novo", messages: [] }; save(); selectChat(currentChatId); }
-        function selectChat(id) { currentChatId = id; renderChat(); renderHistory(); if(window.innerWidth < 769) document.getElementById('sidebar').classList.remove('open'); }
-        function save() { localStorage.setItem('apexia_history_final', JSON.stringify(chats)); }
+        document.getElementById('lead-form').onsubmit = async (e) => {
+            e.preventDefault();
+            await fetch(e.target.action, { method: 'POST', body: new FormData(e.target), headers: { 'Accept': 'application/json' } });
+            localStorage.setItem('apexia_vip_unlocked', 'true');
+            document.getElementById('modal-lock').style.display = 'none';
+            copy();
+        };
 
-        function renderHistory() {
-            const list = document.getElementById('history-list'); list.innerHTML = '';
-            Object.keys(chats).reverse().forEach(id => {
-                const item = document.createElement('div');
-                item.className = `history-item ${id === currentChatId ? 'active' : ''}`;
-                item.style.padding = '12px'; item.style.cursor = 'pointer';
-                item.innerHTML = `<span>${chats[id].title}</span>`;
-                item.onclick = () => selectChat(id);
-                list.appendChild(item);
-            });
+        function copy() {
+            const area = document.getElementById('prompt-content');
+            area.select();
+            navigator.clipboard.writeText(area.value);
+            const t = document.getElementById('toast');
+            t.className = "show";
+            setTimeout(() => { t.className = ""; }, 3000);
         }
-
-        function handleImage(input) {
-            const reader = new FileReader();
-            reader.onload = (e) => { pendingImage = e.target.result.split(',')[1]; alert("Imagem Pronta!"); };
-            reader.readAsDataURL(input.files[0]);
-        }
-
-        async function enviar() {
-            const input = document.getElementById('user-input');
-            const text = input.value.trim();
-            if(!text && !pendingImage) return;
-            chats[currentChatId].messages.push({ role: 'user', content: text, img: pendingImage });
-            if(chats[currentChatId].title === "Protocolo Novo") chats[currentChatId].title = text.substring(0, 18);
-            renderChat(); input.value = ''; const imgToSend = pendingImage; pendingImage = null;
-
-            const win = document.getElementById('chat-window');
-            const loader = document.createElement('div');
-            loader.className = "thinking";
-            loader.innerHTML = `<img src="logo.png" onerror="this.src='https://via.placeholder.com/35/00FF00/000000?text=A'"> Analisando...`;
-            win.appendChild(loader); win.scrollTop = win.scrollHeight;
-
-            const historyContext = chats[currentChatId].messages.slice(-10).map(m => `${m.role === 'user' ? 'Usuário' : 'Mentor'}: ${m.content}`).join('\n');
-
-            try {
-                const response = await fetch(BACKEND_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        prompt: `${mentorYouTubePrompt}\n\n${canalDataGlobal}\n\nHISTÓRICO:\n${historyContext}\n\nPERGUNTA: ${text}`,
-                        image: imgToSend
-                    })
-                });
-                const data = await response.json();
-                loader.remove();
-                chats[currentChatId].messages.push({ role: 'ai', content: data.reply });
-                save(); renderChat();
-            } catch (e) { loader.innerText = "ERRO NA CONEXÃO."; }
-        }
-
-        function renderChat() {
-            const win = document.getElementById('chat-window');
-            win.innerHTML = chats[currentChatId].messages.length === 0 ? '<div class="msg ai">SISTEMA PRONTO. AGUARDANDO PROTOCOLO.</div>' : '';
-            chats[currentChatId].messages.forEach(m => {
-                const div = document.createElement('div'); div.className = `msg ${m.role}`;
-                if(m.content) div.innerHTML = `<div>${m.content.replace(/\n/g, '<br>')}</div>`;
-                if(m.img) div.innerHTML += `<img src="data:image/jpeg;base64,${m.img}">`;
-                win.appendChild(div);
-            });
-            win.scrollTop = win.scrollHeight;
-        }
+        loadPrompt(1);
     </script>
 </body>
 </html>
+
+
+
+
